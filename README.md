@@ -1,16 +1,36 @@
-## Hi there 👋
+```
+ ███████╗   ██████╗ ██╗  ██╗ █████╗ ███╗   ██╗██╗
+ ██╔════╝   ██╔══██╗██║  ██║██╔══██╗████╗  ██║██║
+ █████╗     ██║  ██║███████║███████║██╔██╗ ██║██║
+ ██╔══╝     ██║  ██║██╔══██║██╔══██║██║╚██╗██║██║
+ ██║██╗  ██╗██████╔╝██║  ██║██║  ██║██║ ╚████║██║
+ ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝
+```
 
-<!--
-**fdhani/fdhani** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+```
+> dhani@github:~$ whoami
+F. Dhani Achmad — Frontend Engineer · West Java, Indonesia
+"Passion for web development and fascinated with the world of Artificial Intelligence."
+```
 
-Here are some ideas to get you started:
+**→ Interactive portfolio:** <https://fdhani.github.io/fdhani/>
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+```
+> dhani@github:~$ stack
+React · Next.js · TypeScript · React Native · Flutter · Redux · UI/UX
+```
+
+```
+> dhani@github:~$ now
+Software Engineer @ Omni HR (Singapore) — Attendance / Time Off / Payroll
+```
+
+```
+> dhani@github:~$ contact
+  ✉  fachran.dhani@gmail.com
+  in/ fachran-dhani
+  ⌨  github.com/dhani48
+  ✎  behance.net/dhaniforty8a69
+```
+
+<sub>This repo also hosts the source for the portfolio site above — built with [Astro](https://astro.build), deployed to GitHub Pages on every push to `main`.</sub>

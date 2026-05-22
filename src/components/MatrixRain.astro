@@ -1,0 +1,48 @@
+---
+// Background matrix-rain canvas
+---
+
+<canvas id="matrix" aria-hidden="true"></canvas>
+
+<script>
+  const canvas = document.getElementById('matrix') as HTMLCanvasElement | null;
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const chars =
+      'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]=+/*-_'.split(
+        ''
+      );
+    let cols = 0;
+    let drops: number[] = [];
+
+    function size() {
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      cols = Math.floor(canvas.width / 14);
+      drops = new Array(cols).fill(0).map(() => Math.random() * -100);
+    }
+
+    function draw() {
+      if (!canvas) return;
+      ctx.fillStyle = 'rgba(6,10,6,0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const color =
+        getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#00ff7a';
+      ctx.fillStyle = color;
+      ctx.font = '14px JetBrains Mono, monospace';
+      for (let i = 0; i < cols; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * 14;
+        const y = drops[i] * 14;
+        ctx.fillText(text, x, y);
+        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    size();
+    window.addEventListener('resize', size);
+    setInterval(draw, 60);
+  }
+</script>
