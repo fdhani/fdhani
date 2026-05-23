@@ -1,0 +1,88 @@
+---
+import Layout from './Layout.astro';
+import { RESUME } from '../data/resume';
+
+interface Props {
+  activeTab: 'career' | 'education';
+  title?: string;
+  description?: string;
+}
+
+const { activeTab, title, description } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const tabs: { key: Props['activeTab']; href: string; label: string }[] = [
+  { key: 'career', href: `${base}about-me/career/`, label: 'career' },
+  { key: 'education', href: `${base}about-me/education/`, label: 'education' },
+];
+---
+
+<Layout
+  title={title ?? `About — F. Dhani Achmad`}
+  description={
+    description ??
+    'About F. Dhani Achmad — frontend engineer based in West Java, Indonesia. Career, schools, certifications, and awards.'
+  }
+  activeNav="about-me"
+>
+  <main class="page">
+    <div class="container">
+      <a class="nav-back" href={base}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        ../
+      </a>
+
+      <header class="page-intro about-intro">
+        <h1>About me</h1>
+        <p class="lead">
+          Frontend engineer with a designer's eye and an AI tinkerer's curiosity.
+          The last eight years have been spent shipping product surfaces at
+          Tokopedia, 99 Group, and now Omni HR — usually somewhere between
+          design systems and platform work.
+        </p>
+
+        <div class="hero meta about-meta">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            {RESUME.location}
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            8+ years in frontend
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 8h14M5 12h14M5 16h10" />
+            </svg>
+            {RESUME.languages.join(' · ')}
+          </span>
+        </div>
+      </header>
+
+      <nav class="about-tabs" aria-label="About sections">
+        {
+          tabs.map((t) => (
+            <a
+              href={t.href}
+              class={t.key === activeTab ? 'active' : undefined}
+              aria-current={t.key === activeTab ? 'page' : undefined}
+            >
+              {t.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <slot />
+    </div>
+  </main>
+</Layout>
