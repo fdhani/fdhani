@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { RESUME } from '../data/resume';
+import { getCollection } from 'astro:content';
+const projectCount = (await getCollection('projects')).length;
 
 const yearRange = (when: string) => {
   const parts = when.split(/[–-]/).map((p) => p.trim());
@@ -164,8 +166,8 @@ const yearRange = (when: string) => {
         }
       </section>
 
-      <!-- ====================== PROJECTS ====================== -->
-      <section class="projects-section reveal">
+      <!-- ====================== PROJECTS TEASER ====================== -->
+      <section class="projects-teaser reveal">
         <h2 class="section-heading">
           projects
           <svg class="box draw-on-scroll" viewBox="0 0 200 78" preserveAspectRatio="none" aria-hidden="true">
@@ -181,38 +183,32 @@ const yearRange = (when: string) => {
           </svg>
         </h2>
 
-        <div class="projects" id="projects">
-          <div class="projects-hint">
-            <svg class="arrow" width="44" height="24" viewBox="0 0 44 24" aria-hidden="true">
-              <path
-                d="M2 14 C 14 4, 26 22, 40 10"
-                fill="none"
-                stroke="#7a8398"
-                stroke-width="1.6"
-                stroke-linecap="round"
-              ></path>
-              <path
-                d="M34 6 L 40 10 L 36 16"
-                fill="none"
-                stroke="#7a8398"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            try dragging me!
-          </div>
+        <p class="teaser-blurb">
+          {projectCount} selected pieces of work — production HR modules, large platform
+          migrations, performance work, and the occasional landing page. Each has its own little
+          page.
+        </p>
 
-          {
-            RESUME.projects.map(([name, desc]) => (
-              <article class="sticky" data-draggable="true">
-                <span class="pin" aria-hidden="true" />
-                <h3>{name}</h3>
-                <p>{desc}</p>
-              </article>
-            ))
-          }
-        </div>
+        <a class="teaser-link" href={`${import.meta.env.BASE_URL}projects/`}>
+          flip to the projects page
+          <svg class="arrow" width="80" height="26" viewBox="0 0 80 26" aria-hidden="true">
+            <path
+              d="M2 14 C 22 4, 44 22, 74 12"
+              fill="none"
+              stroke="#d62828"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            ></path>
+            <path
+              d="M66 6 L 74 12 L 68 20"
+              fill="none"
+              stroke="#d62828"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </a>
       </section>
 
       <!-- ====================== EDUCATION ====================== -->

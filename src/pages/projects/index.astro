@@ -1,0 +1,187 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { RESUME } from '../../data/resume';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Projects — F. Dhani Achmad"
+  description="Selected work by F. Dhani Achmad — production HR modules, platform migrations, performance and design-systems work."
+>
+  <canvas id="cursor-canvas" aria-hidden="true"></canvas>
+
+  <div class="paper">
+    <main>
+      <a class="nav-back" href={base}>
+        <svg width="36" height="20" viewBox="0 0 36 20" aria-hidden="true">
+          <path
+            d="M34 10 C 22 6, 14 14, 4 9"
+            fill="none"
+            stroke="#1e2a5e"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          ></path>
+          <path
+            d="M10 4 L 4 9 L 10 14"
+            fill="none"
+            stroke="#1e2a5e"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+        back to the main page
+      </a>
+
+      <header class="intro">
+        <h1>
+          projects
+          <svg
+            class="underline draw-on-scroll in-view"
+            viewBox="0 0 420 22"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 14 C 60 6, 140 18, 220 10 S 340 16, 416 12"
+              fill="none"
+              stroke="#d62828"
+              stroke-width="3.5"
+              stroke-linecap="round"
+              style="--len: 600"
+            ></path>
+          </svg>
+        </h1>
+        <div class="role-tag">
+          {projects.length} <em>selected pieces</em> — click any note to read more
+        </div>
+        <p class="location">
+          most are production work across <span class="org-mention">Omni HR</span>,
+          <span class="org-mention">99 Group</span>, and <span class="org-mention">Tokopedia</span>.
+        </p>
+      </header>
+
+      <section class="projects-page-section reveal">
+        <div class="projects projects-grid">
+          <div class="projects-hint">
+            <svg class="arrow" width="44" height="24" viewBox="0 0 44 24" aria-hidden="true">
+              <path
+                d="M2 14 C 14 4, 26 22, 40 10"
+                fill="none"
+                stroke="#7a8398"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M34 6 L 40 10 L 36 16"
+                fill="none"
+                stroke="#7a8398"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            click a note!
+          </div>
+
+          {
+            projects.map((p) => (
+              <a
+                class={`sticky sticky-${p.data.color} sticky-link`}
+                href={`${base}projects/${p.slug}/`}
+              >
+                <span class="pin" aria-hidden="true" />
+                <span class="kicker">{p.data.period}</span>
+                <h3>{p.data.name}</h3>
+                <p>{p.data.short}</p>
+                <span class="open-hint">read →</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <footer class="reveal">
+        <p class="signed">— signed, dhani ✎</p>
+        <span class="signature">
+          {RESUME.contact.email} · {new Date().getFullYear()}
+        </span>
+      </footer>
+    </main>
+  </div>
+
+  <script is:inline>
+    (function () {
+      if (typeof IntersectionObserver === 'undefined') {
+        document
+          .querySelectorAll('.reveal, .draw-on-scroll')
+          .forEach((el) => el.classList.add('in-view'));
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+      document
+        .querySelectorAll('.reveal, .draw-on-scroll:not(.in-view)')
+        .forEach((el) => io.observe(el));
+    })();
+
+    (function () {
+      const canvas = document.getElementById('cursor-canvas');
+      if (!canvas) return;
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      function size() {
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      size();
+      window.addEventListener('resize', size);
+      let last = null;
+      let lastTime = 0;
+      window.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        const dt = now - lastTime;
+        lastTime = now;
+        if (last && dt < 80) {
+          const speed = Math.hypot(e.clientX - last.x, e.clientY - last.y);
+          if (speed > 1.5) {
+            ctx.strokeStyle = 'rgba(60, 70, 110, 0.45)';
+            ctx.lineWidth = Math.min(1.4, 0.6 + speed * 0.03);
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(last.x, last.y);
+            ctx.lineTo(e.clientX, e.clientY);
+            ctx.stroke();
+          }
+        }
+        last = { x: e.clientX, y: e.clientY };
+      });
+      setInterval(() => {
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.045)';
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.restore();
+      }, 90);
+    })();
+  </script>
+</Layout>

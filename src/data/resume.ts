@@ -10,6 +10,8 @@ export type Experience = {
 
 export type SkillGroup = { name: string; items: [string, number][] };
 
+export type StickyColor = 'yellow' | 'pink' | 'blue' | 'green' | 'orange';
+
 export const RESUME = {
   name: 'F. Dhani Achmad',
   handle: 'dhani48',
@@ -191,13 +193,4 @@ export const RESUME = {
       ],
     },
   ] satisfies SkillGroup[],
-  projects: [
-    ['Omni HR — Attendance / Time Off / Payroll', 'Production HR modules, AI-augmented workflows.'],
-    ['99.co — Property Platform Refresh', 'Next.js App Router migration, legacy Redux removal.'],
-    ['Tokopedia Seller Dashboard', '+25% Lighthouse on critical pages; observability standards.'],
-    ['START Summit App', "Tokopedia's first cross-platform Flutter app for live events."],
-    ['Tokopedia Lite', 'Mobile web for Tokopedia (React) — lighter footprint.'],
-    ['Seller Order Management Revamp', 'Owned design → engineering end-to-end.'],
-    ['Kata.ai Landing', 'Designed + shipped B2B + corporate landing pages.'],
-  ] as [string, string][],
 } as const;

@@ -1,0 +1,218 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { RESUME } from '../../data/resume';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+type Props = { project: CollectionEntry<'projects'> };
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const base = import.meta.env.BASE_URL;
+
+const all = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const others = all.filter((p) => p.slug !== project.slug).slice(0, 3);
+---
+
+<Layout
+  title={`${project.data.name} — F. Dhani Achmad`}
+  description={project.data.short}
+>
+  <canvas id="cursor-canvas" aria-hidden="true"></canvas>
+
+  <div class="paper">
+    <main class="project-detail">
+      <a class="nav-back" href={`${base}projects/`}>
+        <svg width="36" height="20" viewBox="0 0 36 20" aria-hidden="true">
+          <path
+            d="M34 10 C 22 6, 14 14, 4 9"
+            fill="none"
+            stroke="#1e2a5e"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          ></path>
+          <path
+            d="M10 4 L 4 9 L 10 14"
+            fill="none"
+            stroke="#1e2a5e"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+        back to projects
+      </a>
+
+      <div class="project-corner" aria-hidden="true">
+        <svg width="84" height="84" viewBox="0 0 84 84">
+          <path d="M 0 0 L 84 0 L 0 84 Z" fill="rgba(80, 60, 30, 0.10)"></path>
+          <path
+            d="M 0 0 L 84 0 L 0 84"
+            fill="none"
+            stroke="rgba(80, 60, 30, 0.35)"
+            stroke-width="1"
+          ></path>
+        </svg>
+      </div>
+
+      <header class="intro project-intro">
+        <p class="kicker-line">
+          <span class="org-mention">{project.data.org}</span> · {project.data.period}
+        </p>
+        <h1>
+          {project.data.name}
+          <svg
+            class="underline draw-on-scroll in-view"
+            viewBox="0 0 540 22"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 14 C 80 6, 160 18, 240 10 S 380 16, 460 8 S 520 14, 536 12"
+              fill="none"
+              stroke="#d62828"
+              stroke-width="3.5"
+              stroke-linecap="round"
+              style="--len: 700"
+            ></path>
+          </svg>
+        </h1>
+        <p class="role-line">
+          <span class="role-tag-small">role:</span>
+          <em>{project.data.role}</em>
+        </p>
+      </header>
+
+      <section class="stack-row reveal">
+        <h2 class="mini-heading">stack ✏</h2>
+        <div class="stack-tags">
+          {
+            project.data.stack.map((tech, i) => (
+              <span class={`tag tag-${(i % 5) + 1}`}>{tech}</span>
+            ))
+          }
+        </div>
+      </section>
+
+      <article class="project-body reveal">
+        <Content />
+      </article>
+
+      {
+        project.data.link && (
+          <p class="external-link reveal">
+            <a href={project.data.link} target="_blank" rel="noopener">
+              visit the live project ↗
+            </a>
+          </p>
+        )
+      }
+
+      <section class="related reveal">
+        <h2 class="mini-heading">other notebooks</h2>
+        <div class="projects projects-grid related-grid">
+          {
+            others.map((p) => (
+              <a
+                class={`sticky sticky-${p.data.color} sticky-link`}
+                href={`${base}projects/${p.slug}/`}
+              >
+                <span class="pin" aria-hidden="true" />
+                <span class="kicker">{p.data.period}</span>
+                <h3>{p.data.name}</h3>
+                <p>{p.data.short}</p>
+                <span class="open-hint">read →</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <footer class="reveal">
+        <p class="signed">— signed, dhani ✎</p>
+        <span class="signature">
+          {RESUME.contact.email} · {new Date().getFullYear()}
+        </span>
+      </footer>
+    </main>
+  </div>
+
+  <script is:inline>
+    (function () {
+      if (typeof IntersectionObserver === 'undefined') {
+        document
+          .querySelectorAll('.reveal, .draw-on-scroll')
+          .forEach((el) => el.classList.add('in-view'));
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+      document
+        .querySelectorAll('.reveal, .draw-on-scroll:not(.in-view)')
+        .forEach((el) => io.observe(el));
+    })();
+
+    (function () {
+      const canvas = document.getElementById('cursor-canvas');
+      if (!canvas) return;
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      function size() {
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      size();
+      window.addEventListener('resize', size);
+      let last = null;
+      let lastTime = 0;
+      window.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        const dt = now - lastTime;
+        lastTime = now;
+        if (last && dt < 80) {
+          const speed = Math.hypot(e.clientX - last.x, e.clientY - last.y);
+          if (speed > 1.5) {
+            ctx.strokeStyle = 'rgba(60, 70, 110, 0.45)';
+            ctx.lineWidth = Math.min(1.4, 0.6 + speed * 0.03);
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(last.x, last.y);
+            ctx.lineTo(e.clientX, e.clientY);
+            ctx.stroke();
+          }
+        }
+        last = { x: e.clientX, y: e.clientY };
+      });
+      setInterval(() => {
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.045)';
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.restore();
+      }, 90);
+    })();
+  </script>
+</Layout>
