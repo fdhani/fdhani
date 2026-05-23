@@ -29,7 +29,7 @@ export const RESUME = {
   awards: [
     { year: 2016, title: 'DINUS Application Development', detail: '1st Place' },
     { year: 2016, title: 'WPP STREAM (Un)conference', detail: 'Pitching Competition' },
-    { year: 2016, title: 'World in Travel — Startup Pitch', detail: 'Finalist' },
+    { year: 2016, title: 'World in Travel, Startup Pitch', detail: 'Finalist' },
   ],
   contact: {
     email: 'fachran.dhani@gmail.com',
@@ -67,20 +67,20 @@ export const RESUME = {
     },
     {
       org: 'Tokopedia',
-      role: 'Lead Software Engineer — Web Platform',
+      role: 'Lead Software Engineer, Web Platform',
       when: 'Jan 2023 – Apr 2024',
       loc: 'Jakarta, Indonesia',
       startY: 2023,
       endY: 2024.25,
       bullets: [
         'Led & grew a team of 8 engineers on Tokopedia Seller Dashboard.',
-        'Drove frontend observability — standardized hundreds of alerts/dashboards.',
+        'Drove frontend observability, standardizing hundreds of alerts and dashboards.',
         'Initiated Flutter R&D, shipped the START Summit cross-platform app.',
       ],
     },
     {
       org: 'Tokopedia',
-      role: 'Senior Software Engineer — Web Platform',
+      role: 'Senior Software Engineer, Web Platform',
       when: 'Aug 2020 – Apr 2023',
       loc: 'Jakarta, Indonesia',
       startY: 2020.67,
@@ -94,7 +94,7 @@ export const RESUME = {
     },
     {
       org: 'Tokopedia',
-      role: 'Software Engineer — Web Platform',
+      role: 'Software Engineer, Web Platform',
       when: 'Jul 2019 – Jul 2020',
       loc: 'Jakarta, Indonesia',
       startY: 2019.5,

@@ -1,5 +1,5 @@
 ---
-name: 99.co — Property Platform Refresh
+name: 99.co Property Platform Refresh
 short: Next.js App Router migration, legacy Redux removal.
 org: 99 Group (99.co · Rumah123 · SRX)
 period: 2024 – 2025

@@ -6,11 +6,14 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
 const base = import.meta.env.BASE_URL;
+
+const imgSrc = (img: string) =>
+  /^https?:\/\//.test(img) ? img : `${base}${img.replace(/^\//, '')}`;
 ---
 
 <Layout
-  title="Projects — F. Dhani Achmad"
-  description="Selected work by F. Dhani Achmad — production HR modules, platform migrations, performance and design-systems work."
+  title="Projects · F. Dhani Achmad"
+  description="Selected work by F. Dhani Achmad: production HR modules, platform migrations, performance and design-systems work."
   activeNav="projects"
 >
   <main class="page">
@@ -26,7 +29,7 @@ const base = import.meta.env.BASE_URL;
       <header class="page-intro">
         <h1>Projects</h1>
         <p class="lead">
-          {projects.length} selected pieces — production work across Omni HR,
+          {projects.length} selected pieces. Production work across Omni HR,
           99 Group, and Tokopedia.
         </p>
       </header>
@@ -35,21 +38,26 @@ const base = import.meta.env.BASE_URL;
         <div class="cards">
           {
             projects.map((p) => (
-              <a class="card" href={`${base}projects/${p.slug}/`}>
-                <div class="head">
-                  <h3 class="name">{p.data.name}</h3>
-                  <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </div>
-                <p class="desc">{p.data.short}</p>
-                <div class="stack">
-                  <span class="chip">{p.data.org}</span>
-                  <span class="chip">{p.data.period}</span>
-                  {p.data.stack.slice(0, 3).map((tech) => (
-                    <span class="chip">{tech}</span>
-                  ))}
+              <a class={`card ${p.data.image ? 'has-image' : ''}`} href={`${base}projects/${p.slug}/`}>
+                {p.data.image && (
+                  <div class="card-media">
+                    <img
+                      src={imgSrc(p.data.image)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                )}
+                <div class="card-body">
+                  <div class="head">
+                    <h3 class="name">{p.data.name}</h3>
+                    <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="7" y1="17" x2="17" y2="7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </div>
+                  <p class="desc">{p.data.short}</p>
                 </div>
               </a>
             ))
