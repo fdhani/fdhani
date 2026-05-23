@@ -542,6 +542,94 @@ footer .signature {
   opacity: 0.42;
 }
 
+/* ===================== TOP PAGE-TABS NAV ===================== */
+.page-tabs {
+  display: flex;
+  gap: 18px;
+  margin: 24px 0 56px;
+  flex-wrap: wrap;
+}
+
+.page-tab {
+  flex: 1;
+  min-width: 220px;
+  position: relative;
+  display: block;
+  padding: 16px 56px 18px 20px;
+  background: var(--sticky-blue);
+  color: var(--ink);
+  text-decoration: none;
+  border: none;
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 6px 10px -2px rgba(60, 50, 30, 0.2),
+    0 14px 22px -10px rgba(60, 50, 30, 0.28);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+}
+
+.page-tab.tab-projects {
+  background: var(--sticky-pink);
+  transform: rotate(-1.4deg);
+}
+
+.page-tab.tab-education {
+  background: var(--sticky-blue);
+  transform: rotate(1.2deg);
+}
+
+.page-tab:hover {
+  transform: rotate(0deg) translateY(-3px) scale(1.02);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 10px 16px -2px rgba(60, 50, 30, 0.28),
+    0 22px 30px -10px rgba(60, 50, 30, 0.4);
+}
+
+.page-tab .tab-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background:
+    linear-gradient(135deg, transparent 50%, rgba(80, 60, 30, 0.18) 50%);
+  pointer-events: none;
+}
+
+.page-tab .tab-label {
+  display: block;
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.page-tab .tab-sub {
+  display: block;
+  font-family: var(--hand-thin);
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  letter-spacing: 0.2px;
+}
+
+.page-tab .tab-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.22s ease;
+}
+
+.page-tab:hover .tab-arrow {
+  transform: translateY(-50%) translateX(6px);
+}
+
 /* ===================== NAV BACK ===================== */
 .nav-back {
   display: inline-flex;
@@ -917,6 +1005,119 @@ footer .signature {
   margin: 24px 0;
 }
 
+/* ===================== EDUCATION PAGE ===================== */
+.edu-row.edu-row-detail {
+  margin-bottom: 22px;
+}
+.edu-row.edu-row-detail .school {
+  font-size: 30px;
+  margin: 0 0 2px;
+}
+.edu-row.edu-row-detail .degree {
+  font-size: 18px;
+}
+
+.certs .cert-list,
+.langs .lang-list,
+.awards .award-list {
+  margin: 0;
+  padding: 0;
+}
+
+.cert-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+.cert-list li {
+  display: inline-block;
+  padding: 4px 14px;
+  font-family: var(--hand);
+  font-size: 18px;
+  background: var(--sticky-yellow);
+  color: var(--ink);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 3px 4px -1px rgba(60, 50, 30, 0.18);
+  transform: rotate(-1deg);
+}
+.cert-list li:nth-child(even) {
+  background: var(--sticky-orange);
+  transform: rotate(1.5deg);
+}
+
+.lang-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+.lang-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  font-family: var(--hand);
+  font-size: 22px;
+  color: var(--ink);
+  background: transparent;
+  border: 2px dashed var(--ink-faded);
+  border-radius: 999px;
+  transform: rotate(-1deg);
+  transition: transform 0.2s, border-color 0.2s, color 0.2s;
+}
+.lang-tag:nth-child(even) {
+  transform: rotate(1.5deg);
+}
+.lang-tag:hover {
+  border-color: var(--red-marker);
+  color: var(--red-marker);
+  transform: rotate(0) scale(1.05);
+}
+
+.award-list {
+  list-style: none;
+}
+.award-list li {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 0 22px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.award-list li::before {
+  content: '★';
+  position: absolute;
+  left: -26px;
+  top: -2px;
+  color: var(--red-marker);
+  font-size: 18px;
+  transform: rotate(-12deg);
+}
+.award-year {
+  font-family: var(--hand);
+  font-size: 24px;
+  color: var(--red-marker);
+  font-weight: 700;
+  background: var(--yellow-hi-soft);
+  padding: 0 8px;
+  display: inline-block;
+  height: fit-content;
+  transform: rotate(-2deg);
+}
+.award-title {
+  font-family: var(--hand);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.15;
+}
+.award-detail {
+  font-family: var(--hand-thin);
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+
 .external-link {
   margin: 24px 0 0;
   font-family: var(--hand);
@@ -999,6 +1200,25 @@ footer .signature {
   }
   .teaser-link::after {
     right: 60px;
+  }
+  .page-tabs {
+    flex-direction: column;
+    gap: 14px;
+    margin: 16px 0 40px;
+  }
+  .page-tab {
+    min-width: 0;
+    padding: 14px 50px 16px 18px;
+  }
+  .page-tab .tab-label {
+    font-size: 32px;
+  }
+  .award-list li {
+    grid-template-columns: 60px 1fr;
+    gap: 0 16px;
+  }
+  .award-year {
+    font-size: 20px;
   }
   #cursor-canvas {
     display: none;
