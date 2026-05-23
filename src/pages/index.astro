@@ -1,12 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { RESUME } from '../data/resume';
-import { getCollection } from 'astro:content';
 
-const allProjects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const featured = allProjects.slice(0, 4);
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -15,7 +10,6 @@ const base = import.meta.env.BASE_URL;
     <div class="container">
       <!-- ============================ HERO ============================ -->
       <section class="hero">
-        <p class="eyebrow">available for interesting problems</p>
         <h1>
           Hi, I'm Dhani — <span class="accent">frontend engineer</span> building production product surfaces.
         </h1>
@@ -64,53 +58,6 @@ const base = import.meta.env.BASE_URL;
             </svg>
             linkedin
           </a>
-          <a href={RESUME.contact.behance} target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M22 7h-7V5h7v2zM15.5 17h-2.85c0-1.07-.3-2.05-.96-2.7.36-.32.6-.78.6-1.42 0-1.55-1-2.2-2.5-2.2H6v9.55h3.95c1.7 0 3.05-.85 3.05-2.5 0-.95-.55-1.65-1.4-2 .65-.4 1.05-1.05 1.05-1.85 0-.07 0-.13-.02-.2h2.87c0 1.4 1.1 2.2 2.65 2.2 1.8 0 2.5-1 2.55-1.85h-2.05c-.05.35-.4.7-.95.7-.7 0-1.05-.5-1.05-1.15h4.1c.05-.25.05-.5.05-.7C20.8 14.2 19.7 13 17.5 13s-3.45 1.4-3.45 3.5c0 .15 0 .35.05.5zM8.5 13.7H10c.7 0 1.15.3 1.15.95 0 .65-.45.95-1.15.95H8.5v-1.9zm0 4h1.7c.85 0 1.35.4 1.35 1.1 0 .75-.5 1.15-1.35 1.15H8.5v-2.25zm10-3.45c.65 0 .95.45 1 1H17.5c.05-.55.4-1 1-1z" />
-            </svg>
-            behance
-          </a>
-        </div>
-      </section>
-
-      <!-- ============================ ABOUT TEASER ============================ -->
-      <section class="section about reveal">
-        <div class="section-head">
-          <h2>about</h2>
-          <a class="more" href={`${base}about-me/`}>more about me →</a>
-        </div>
-        <p>
-          Frontend engineer with a designer's eye and an AI tinkerer's curiosity.
-          I like turning legacy codebases into tidy systems, mentoring engineers,
-          and squeezing performance out of pages used by millions.
-        </p>
-      </section>
-
-      <!-- ============================ PROJECTS ============================ -->
-      <section class="section reveal">
-        <div class="section-head">
-          <h2>featured work</h2>
-          <a class="more" href={`${base}projects/`}>all projects →</a>
-        </div>
-        <div class="cards">
-          {
-            featured.map((p) => (
-              <a class="card" href={`${base}projects/${p.slug}/`}>
-                <div class="head">
-                  <h3 class="name">{p.data.name}</h3>
-                  <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </div>
-                <p class="desc">{p.data.short}</p>
-                <div class="stack">
-                  <span class="chip">{p.data.org}</span>
-                  <span class="chip">{p.data.period}</span>
-                </div>
-              </a>
-            ))
-          }
         </div>
       </section>
 

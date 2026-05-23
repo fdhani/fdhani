@@ -3,25 +3,25 @@ import Layout from './Layout.astro';
 import { RESUME } from '../data/resume';
 
 interface Props {
-  activeTab: 'career' | 'education';
   title?: string;
   description?: string;
 }
 
-const { activeTab, title, description } = Astro.props;
+const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
-const tabs: { key: Props['activeTab']; href: string; label: string }[] = [
-  { key: 'career', href: `${base}about-me/career/`, label: 'career' },
-  { key: 'education', href: `${base}about-me/education/`, label: 'education' },
+const tabs: { key: string; label: string }[] = [
+  { key: 'experience', label: 'experience' },
+  { key: 'education', label: 'education' },
+  { key: 'awards', label: 'awards' },
 ];
 ---
 
 <Layout
-  title={title ?? `About — F. Dhani Achmad`}
+  title={title ?? `About me — F. Dhani Achmad`}
   description={
     description ??
-    'About F. Dhani Achmad — frontend engineer based in West Java, Indonesia. Career, schools, certifications, and awards.'
+    'About F. Dhani Achmad — frontend engineer based in West Java, Indonesia. Experience, schools, and awards.'
   }
   activeNav="about-me"
 >
@@ -59,22 +59,16 @@ const tabs: { key: Props['activeTab']; href: string; label: string }[] = [
             </svg>
             8+ years in frontend
           </span>
-          <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 8h14M5 12h14M5 16h10" />
-            </svg>
-            {RESUME.languages.join(' · ')}
-          </span>
         </div>
       </header>
 
-      <nav class="about-tabs" aria-label="About sections">
+      <nav class="about-tabs" aria-label="About sections" id="about-tabs">
         {
           tabs.map((t) => (
             <a
-              href={t.href}
-              class={t.key === activeTab ? 'active' : undefined}
-              aria-current={t.key === activeTab ? 'page' : undefined}
+              href={`#${t.key}`}
+              data-tab={t.key}
+              aria-controls={`panel-${t.key}`}
             >
               {t.label}
             </a>
@@ -82,7 +76,61 @@ const tabs: { key: Props['activeTab']; href: string; label: string }[] = [
         }
       </nav>
 
-      <slot />
+      <div class="about-panels" id="about-panels" data-active-tab="experience">
+        <slot />
+      </div>
     </div>
   </main>
+
+  <script is:inline>
+    (function () {
+      var tabsNav = document.getElementById('about-tabs');
+      var panels = document.getElementById('about-panels');
+      if (!tabsNav || !panels) return;
+
+      var valid = ['experience', 'education', 'awards'];
+
+      function setActive(key, opts) {
+        opts = opts || {};
+        if (valid.indexOf(key) === -1) key = 'experience';
+        panels.setAttribute('data-active-tab', key);
+        tabsNav.querySelectorAll('a').forEach(function (a) {
+          var isActive = a.getAttribute('data-tab') === key;
+          if (isActive) {
+            a.classList.add('active');
+            a.setAttribute('aria-current', 'page');
+          } else {
+            a.classList.remove('active');
+            a.removeAttribute('aria-current');
+          }
+        });
+        if (opts.updateHash !== false) {
+          var newHash = '#' + key;
+          if (window.location.hash !== newHash) {
+            history.replaceState(null, '', newHash);
+          }
+        }
+      }
+
+      function readHash() {
+        return (window.location.hash || '').replace(/^#/, '');
+      }
+
+      // initial
+      setActive(readHash() || 'experience', { updateHash: false });
+
+      // tab click → no full reload
+      tabsNav.addEventListener('click', function (e) {
+        var a = e.target.closest('a[data-tab]');
+        if (!a) return;
+        e.preventDefault();
+        setActive(a.getAttribute('data-tab'));
+      });
+
+      // back/forward
+      window.addEventListener('hashchange', function () {
+        setActive(readHash() || 'experience', { updateHash: false });
+      });
+    })();
+  </script>
 </Layout>

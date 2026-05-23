@@ -16,33 +16,122 @@ const yearRange = (when: string) => {
   if (start === end) return start;
   return `${start} – ${end === 'now' ? 'now' : end.slice(-2)}`;
 };
+
+const isCurrent = (when: string) => /present|now/i.test(when);
+
+// Group consecutive entries by org so Tokopedia (5 roles) collapses into one company on the spine.
+type Exp = (typeof RESUME.experience)[number];
+const groups: { org: string; entries: Exp[] }[] = [];
+for (const e of RESUME.experience) {
+  const last = groups[groups.length - 1];
+  if (last && last.org === e.org) last.entries.push(e);
+  else groups.push({ org: e.org, entries: [e] });
+}
 ---
 
-<AboutLayout activeTab="career">
-  <section class="reveal">
-    <div class="section-head">
-      <h2>experience</h2>
-    </div>
-    <div class="timeline">
+<AboutLayout>
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section class="tab-panel" id="panel-experience" data-tab-panel="experience">
+    <ol class="timeline-v" id="timeline-v">
       {
-        RESUME.experience.map((e) => (
-          <div class="exp">
-            <div class="when">
-              {yearRange(e.when)}
-              <span class="loc">{e.loc}</span>
+        groups.map((g, gi) => (
+          <li class="tl-group">
+            <div class="tl-spine" aria-hidden="true">
+              <span
+                class={`tl-dot ${isCurrent(g.entries[0].when) ? 'is-current' : ''}`}
+              />
+              <span class="tl-line" />
             </div>
-            <div class="body">
-              <p class="role">{e.role}</p>
-              <p class="org">@ {e.org}</p>
-              <ul class="bullets">
-                {e.bullets.map((b) => (
-                  <li>{b}</li>
-                ))}
+            <div class="tl-group-body">
+              <p class="tl-org">{g.org}</p>
+              <ul class="tl-roles">
+                {g.entries.map((e, i) => {
+                  const expanded = gi === 0 && i === 0;
+                  return (
+                    <li class={`tl-role ${expanded ? 'is-open' : ''}`}>
+                      <button
+                        type="button"
+                        class="tl-role-head"
+                        aria-expanded={expanded ? 'true' : 'false'}
+                      >
+                        <span class="tl-role-when">{yearRange(e.when)}</span>
+                        <span class="tl-role-title">{e.role}</span>
+                        <span class="tl-role-loc">{e.loc}</span>
+                        <svg
+                          class="tl-chev"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </button>
+                      <div class="tl-role-body">
+                        <ul class="bullets">
+                          {e.bullets.map((b) => (
+                            <li>{b}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- ===================== EDUCATION ===================== -->
+  <section class="tab-panel" id="panel-education" data-tab-panel="education">
+    <div class="edu-list">
+      {
+        RESUME.education.map((edu) => (
+          <div class="edu-row">
+            <p class="school">{edu.school}</p>
+            <p class="degree">{edu.degree}</p>
           </div>
         ))
       }
     </div>
   </section>
+
+  <!-- ===================== AWARDS ===================== -->
+  <section class="tab-panel" id="panel-awards" data-tab-panel="awards">
+    <ul class="award-list">
+      {
+        RESUME.awards.map((a) => (
+          <li>
+            <span class="award-year">{a.year}</span>
+            <div>
+              <p class="award-title">{a.title}</p>
+              <p class="award-detail">{a.detail}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var tl = document.getElementById('timeline-v');
+      if (!tl) return;
+      tl.addEventListener('click', function (e) {
+        var head = e.target.closest('.tl-role-head');
+        if (!head) return;
+        var role = head.parentElement;
+        var open = role.classList.toggle('is-open');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    })();
+  </script>
 </AboutLayout>
