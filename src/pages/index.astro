@@ -8,21 +8,6 @@ const allProjects = (await getCollection('projects')).sort(
 );
 const featured = allProjects.slice(0, 4);
 const base = import.meta.env.BASE_URL;
-
-const yearRange = (when: string) => {
-  const parts = when.split(/[–-]/).map((p) => p.trim());
-  const grabYear = (s: string) => {
-    const m = s.match(/(20\d{2}|19\d{2})/);
-    if (m) return m[1];
-    if (/present/i.test(s)) return 'now';
-    return s;
-  };
-  const start = grabYear(parts[0]);
-  const end = grabYear(parts[1] || '');
-  if (!end) return start;
-  if (start === end) return start;
-  return `${start} – ${end === 'now' ? 'now' : end.slice(-2)}`;
-};
 ---
 
 <Layout activeNav="home">
@@ -88,21 +73,16 @@ const yearRange = (when: string) => {
         </div>
       </section>
 
-      <!-- ============================ ABOUT ============================ -->
+      <!-- ============================ ABOUT TEASER ============================ -->
       <section class="section about reveal">
         <div class="section-head">
           <h2>about</h2>
+          <a class="more" href={`${base}about-me/`}>more about me →</a>
         </div>
         <p>
           Frontend engineer with a designer's eye and an AI tinkerer's curiosity.
-          The last <strong>eight years</strong> have been spent shipping product
-          surfaces at Tokopedia, 99 Group, and now Omni HR — usually somewhere
-          between design systems and platform work.
-        </p>
-        <p>
           I like turning legacy codebases into tidy systems, mentoring engineers,
-          and squeezing performance out of pages used by millions. Outside the
-          editor: UI/UX, languages (en/fr/id), and the occasional pitch competition.
+          and squeezing performance out of pages used by millions.
         </p>
       </section>
 
@@ -143,34 +123,6 @@ const yearRange = (when: string) => {
         <p style="color: var(--text-muted); font-size: 15px; margin: 0;">
           Notes on frontend, performance, and AI-assisted dev — in the works.
         </p>
-      </section>
-
-      <!-- ============================ EXPERIENCE ============================ -->
-      <section class="section reveal">
-        <div class="section-head">
-          <h2>experience</h2>
-        </div>
-        <div class="timeline">
-          {
-            RESUME.experience.map((e) => (
-              <div class="exp">
-                <div class="when">
-                  {yearRange(e.when)}
-                  <span class="loc">{e.loc}</span>
-                </div>
-                <div class="body">
-                  <p class="role">{e.role}</p>
-                  <p class="org">@ {e.org}</p>
-                  <ul class="bullets">
-                    {e.bullets.map((b) => (
-                      <li>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))
-          }
-        </div>
       </section>
     </div>
   </main>

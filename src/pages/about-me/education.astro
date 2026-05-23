@@ -1,0 +1,69 @@
+---
+import AboutLayout from '../../layouts/AboutLayout.astro';
+import { RESUME } from '../../data/resume';
+---
+
+<AboutLayout
+  activeTab="education"
+  title="Education — F. Dhani Achmad"
+  description="Education history of F. Dhani Achmad — Universitas Gadjah Mada (Computer Science) and Richard Montgomery High School."
+>
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>schools</h2>
+    </div>
+    <div class="edu-list">
+      {
+        RESUME.education.map((edu) => (
+          <div class="edu-row">
+            <p class="school">{edu.school}</p>
+            <p class="degree">{edu.degree}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    RESUME.certifications.length > 0 && (
+      <section class="section reveal">
+        <div class="section-head">
+          <h2>certifications</h2>
+        </div>
+        <div class="chips">
+          {RESUME.certifications.map((c) => (
+            <span class="chip-pill">{c}</span>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>languages</h2>
+    </div>
+    <div class="chips">
+      {RESUME.languages.map((l) => <span class="chip-pill">{l}</span>)}
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>awards</h2>
+    </div>
+    <ul class="award-list">
+      {
+        RESUME.awards.map((a) => (
+          <li>
+            <span class="award-year">{a.year}</span>
+            <div>
+              <p class="award-title">{a.title}</p>
+              <p class="award-detail">{a.detail}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</AboutLayout>
