@@ -1,14 +1,131 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CRT from '../components/CRT.astro';
-import MatrixRain from '../components/MatrixRain.astro';
-import BootSequence from '../components/BootSequence.astro';
-import Terminal from '../components/Terminal.astro';
+import { RESUME } from '../data/resume';
+
+// short year helper for the timeline left column
+const yearRange = (when: string) => {
+  // e.g. "Apr 2025 – Present" → "2025 –"
+  const parts = when.split(/[–-]/).map((p) => p.trim());
+  const grabYear = (s: string) => {
+    const m = s.match(/(20\d{2}|19\d{2})/);
+    if (m) return m[1];
+    if (/present/i.test(s)) return 'now';
+    return s;
+  };
+  const start = grabYear(parts[0]);
+  const end = grabYear(parts[1] || '');
+  if (!end) return start;
+  if (start === end) return start;
+  return `${start}–${end === 'now' ? 'now' : end.slice(-2)}`;
+};
 ---
 
 <Layout>
-  <CRT />
-  <MatrixRain />
-  <BootSequence />
-  <Terminal />
+  <button
+    id="themeToggle"
+    class="theme-toggle"
+    type="button"
+    aria-label="Toggle color theme"
+  >
+    Theme
+  </button>
+
+  <main>
+    <header class="intro">
+      <h1>{RESUME.name}</h1>
+      <p class="role">{RESUME.title} — currently at Omni HR (Singapore)</p>
+      <p class="location">{RESUME.location}</p>
+
+      <div class="links">
+        <a href={`mailto:${RESUME.contact.email}`}>Email</a>
+        <a href={RESUME.contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a href={RESUME.contact.github} target="_blank" rel="noopener">GitHub</a>
+        <a href={RESUME.contact.behance} target="_blank" rel="noopener">Behance</a>
+      </div>
+    </header>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        Frontend engineer with a designer's eye and an AI tinkerer's curiosity. I've spent the
+        last eight years building product surfaces at <em>Tokopedia</em>, <em>99 Group</em>, and
+        now <em>Omni HR</em> — usually somewhere between design systems and platform work.
+      </p>
+      <p>
+        I like turning legacy codebases into tidy systems, mentoring engineers, and squeezing
+        performance out of pages that millions of people use. Outside the editor: UI/UX design
+        and the occasional pitch competition.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="timeline">
+        {
+          RESUME.experience.map((e) => (
+            <>
+              <div class="year">{yearRange(e.when)}</div>
+              <div class="entry">
+                <p class="role">{e.role}</p>
+                <p class="org">
+                  {e.org} · {e.loc}
+                </p>
+                <ul class="bullets">
+                  {e.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2>Selected Projects</h2>
+      <div class="projects">
+        {
+          RESUME.projects.map(([name, desc]) => (
+            <div class="project">
+              <p class="name">{name}</p>
+              <p class="desc">{desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="education">
+        {
+          RESUME.education.map((edu) => (
+            <div class="edu-row">
+              <p class="school">{edu.school}</p>
+              <p class="degree">{edu.degree}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <footer>
+      <span>{RESUME.contact.email}</span>
+      <span>© {new Date().getFullYear()} {RESUME.name}</span>
+    </footer>
+  </main>
+
+  <script is:inline>
+    (function () {
+      const btn = document.getElementById('themeToggle');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('site-theme', next); } catch (_) {}
+      });
+    })();
+  </script>
 </Layout>
