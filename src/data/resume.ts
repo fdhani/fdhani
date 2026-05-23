@@ -10,6 +10,21 @@ export type Experience = {
 
 export type SkillGroup = { name: string; items: [string, number][] };
 
+export type StickyColor = 'yellow' | 'pink' | 'blue' | 'green' | 'orange';
+
+export type Project = {
+  slug: string;
+  name: string;
+  short: string;
+  org: string;
+  period: string;
+  role: string;
+  stack: string[];
+  summary: string;
+  highlights: string[];
+  color: StickyColor;
+};
+
 export const RESUME = {
   name: 'F. Dhani Achmad',
   handle: 'dhani48',
@@ -192,12 +207,122 @@ export const RESUME = {
     },
   ] satisfies SkillGroup[],
   projects: [
-    ['Omni HR — Attendance / Time Off / Payroll', 'Production HR modules, AI-augmented workflows.'],
-    ['99.co — Property Platform Refresh', 'Next.js App Router migration, legacy Redux removal.'],
-    ['Tokopedia Seller Dashboard', '+25% Lighthouse on critical pages; observability standards.'],
-    ['START Summit App', "Tokopedia's first cross-platform Flutter app for live events."],
-    ['Tokopedia Lite', 'Mobile web for Tokopedia (React) — lighter footprint.'],
-    ['Seller Order Management Revamp', 'Owned design → engineering end-to-end.'],
-    ['Kata.ai Landing', 'Designed + shipped B2B + corporate landing pages.'],
-  ] as [string, string][],
+    {
+      slug: 'omni-hr-modules',
+      name: 'Omni HR — Attendance / Time Off / Payroll',
+      short: 'Production HR modules, AI-augmented workflows.',
+      org: 'Omni HR',
+      period: '2025 – now',
+      role: 'Software Engineer',
+      stack: ['React', 'TypeScript', 'Next.js', 'AI-assisted dev'],
+      summary:
+        'Contributing to the build-out of Omni HR\'s Attendance, Time Off, and Payroll modules in production. Cross-functional feature planning and end-to-end implementation alongside design, product, and backend.',
+      highlights: [
+        'Shipped feature work across three production HR modules used by customer businesses.',
+        'Owned features from spec to ship — design review, implementation, QA, rollout.',
+        'Experimented with AI-driven dev workflows to streamline review and reduce repetitive engineering tasks.',
+      ],
+      color: 'yellow',
+    },
+    {
+      slug: '99co-platform-refresh',
+      name: '99.co — Property Platform Refresh',
+      short: 'Next.js App Router migration, legacy Redux removal.',
+      org: '99 Group (99.co · Rumah123 · SRX)',
+      period: '2024 – 2025',
+      role: 'Staff Software Engineer',
+      stack: ['Next.js', 'App Router', 'React', 'TypeScript', 'Tech leadership'],
+      summary:
+        'Led a frontend team building a stable platform for agents and consumers exploring properties in Singapore. The headline initiatives were a migration from the legacy Pages router to App Router, and a coordinated removal of legacy Redux usage across the codebase.',
+      highlights: [
+        'Planned and shepherded the App Router migration across multiple surfaces.',
+        'Coordinated incremental removal of legacy Redux in favor of newer data patterns.',
+        'Helped scope and review feature work for the team, keeping velocity steady through the refactor.',
+      ],
+      color: 'pink',
+    },
+    {
+      slug: 'tokopedia-seller-dashboard',
+      name: 'Tokopedia Seller Dashboard',
+      short: '+25% Lighthouse on critical pages; observability standards.',
+      org: 'Tokopedia',
+      period: '2020 – 2024',
+      role: 'Lead / Senior Software Engineer',
+      stack: ['React', 'TypeScript', 'Observability', 'Web Performance'],
+      summary:
+        'Helped maintain and improve the overall architecture of the Tokopedia Seller Dashboard (seller.tokopedia.com). Led a team of 8 engineers and drove the front-end observability working group — standardizing how hundreds of alerts and dashboards were authored across squads.',
+      highlights: [
+        'Drove Lighthouse-score improvements on critical Seller Dashboard pages by ~25%.',
+        'Standardized observability primitives — shared the developer experience for alerts/dashboards across teams.',
+        'Shipped major new features including Seller Order Management, Rilisan Spesial, Seller Home, and Statistics.',
+        'Mentored engineers and led the deprecation of several legacy modules to improve stability and security.',
+      ],
+      color: 'blue',
+    },
+    {
+      slug: 'start-summit-app',
+      name: 'START Summit App',
+      short: "Tokopedia's first cross-platform Flutter app for live events.",
+      org: 'Tokopedia',
+      period: '2023',
+      role: 'Cross-platform initiative lead',
+      stack: ['Flutter', 'Cross-platform', 'iOS', 'Android'],
+      summary:
+        "Initiated and led the R&D effort to use Flutter as a shared codebase across Tokopedia's mobile and web orgs. The first production deliverable was the START Summit application — built by web and iOS engineers together — that improved the on-the-ground experience for event participants.",
+      highlights: [
+        'First production-ready Flutter application at Tokopedia.',
+        'Bridged web and iOS teams into a single delivery team for the event app.',
+        'Validated Flutter as a viable cross-platform option for follow-on internal apps.',
+      ],
+      color: 'green',
+    },
+    {
+      slug: 'tokopedia-lite',
+      name: 'Tokopedia Lite',
+      short: 'Mobile web for Tokopedia (React) — lighter footprint.',
+      org: 'Tokopedia',
+      period: '2018 – 2019',
+      role: 'UX Engineer / Frontend',
+      stack: ['React', 'Mobile Web', 'Performance'],
+      summary:
+        'Built Tokopedia Lite — a stripped-down mobile-web version of Tokopedia aimed at lower-bandwidth devices and users who did not want to install the full app. Shipped pixel-accurate UI from the design team using React.',
+      highlights: [
+        'Customer-facing mobile-web surface used as a lighter alternative to the main Tokopedia app.',
+        'Tight collaboration with UI/UX designers on the Product Design team.',
+      ],
+      color: 'orange',
+    },
+    {
+      slug: 'seller-order-management',
+      name: 'Seller Order Management Revamp',
+      short: 'Owned design → engineering end-to-end.',
+      org: 'Tokopedia',
+      period: '2019',
+      role: 'UX Engineer',
+      stack: ['React', 'Design Systems', 'UX'],
+      summary:
+        "Owned the full revamp of Tokopedia's Seller Order Management page — from design exploration through to engineering delivery. The page is one of the highest-traffic seller-facing flows in the marketplace.",
+      highlights: [
+        'Single owner from design through to engineering ship.',
+        'Modernized one of the busiest seller workflows on the platform.',
+      ],
+      color: 'yellow',
+    },
+    {
+      slug: 'kata-ai-landing',
+      name: 'Kata.ai Landing',
+      short: 'Designed + shipped B2B + corporate landing pages.',
+      org: 'Kata.ai',
+      period: '2016',
+      role: 'UI/UX & Frontend Intern',
+      stack: ['SASS', 'JavaScript', 'jQuery', 'EJS', 'Express'],
+      summary:
+        'Designed and implemented the B2B landing page and the main Kata.ai corporate landing page. Worked in a SCRUM cadence with the wider product team.',
+      highlights: [
+        'Shipped both landing pages from design to production.',
+        'Hand-built with SASS + vanilla JS + EJS templating on top of Express.',
+      ],
+      color: 'pink',
+    },
+  ] satisfies Project[],
 } as const;

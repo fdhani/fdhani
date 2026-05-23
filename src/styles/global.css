@@ -542,6 +542,301 @@ footer .signature {
   opacity: 0.42;
 }
 
+/* ===================== NAV BACK ===================== */
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--hand);
+  font-size: 20px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transform: rotate(-1deg);
+  transition: color 0.2s, transform 0.2s;
+}
+.nav-back:hover {
+  color: var(--red-marker);
+  transform: rotate(-2deg) translateX(-3px);
+}
+.nav-back svg {
+  flex: none;
+}
+
+/* ===================== HOME — TEASER LINK ===================== */
+.teaser-blurb {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+}
+.teaser-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--hand);
+  font-size: 28px;
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  padding: 4px 6px;
+  transition: transform 0.2s, color 0.2s;
+}
+.teaser-link::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: 80px;
+  bottom: 4px;
+  height: 10px;
+  background: var(--yellow-hi-soft);
+  z-index: -1;
+  transform: skewX(-4deg);
+}
+.teaser-link:hover {
+  color: var(--red-marker);
+  transform: translateX(4px) rotate(-0.5deg);
+}
+.teaser-link .arrow {
+  margin-top: 6px;
+  flex: none;
+}
+
+/* ===================== PROJECTS LIST PAGE ===================== */
+.projects-page-section {
+  margin-top: 48px;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 36px 28px;
+  padding: 12px 0;
+  margin-top: 16px;
+}
+
+/* sticky note as link */
+.sticky-link {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+}
+.sticky-link:hover {
+  text-decoration: none;
+}
+.sticky-link .kicker {
+  display: block;
+  font-family: var(--hand-thin);
+  font-size: 14px;
+  color: var(--ink-faded);
+  margin-bottom: 2px;
+}
+.sticky-link .open-hint {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--hand-thin);
+  font-size: 14px;
+  color: var(--ink-soft);
+  opacity: 0.65;
+  transition: opacity 0.2s, color 0.2s;
+}
+.sticky-link:hover .open-hint {
+  opacity: 1;
+  color: var(--red-marker);
+}
+
+/* explicit color classes (the nth-child pattern doesn't apply to links cleanly) */
+.sticky.sticky-yellow {
+  background: var(--sticky-yellow);
+  transform: rotate(-2deg);
+}
+.sticky.sticky-pink {
+  background: var(--sticky-pink);
+  transform: rotate(1.5deg);
+}
+.sticky.sticky-blue {
+  background: var(--sticky-blue);
+  transform: rotate(-1deg);
+}
+.sticky.sticky-green {
+  background: var(--sticky-green);
+  transform: rotate(2deg);
+}
+.sticky.sticky-orange {
+  background: var(--sticky-orange);
+  transform: rotate(-1.8deg);
+}
+
+.intro .org-mention {
+  font-family: var(--hand);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ===================== PROJECT DETAIL PAGE ===================== */
+.project-detail {
+  position: relative;
+}
+.project-corner {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.project-intro {
+  margin-bottom: 40px;
+}
+.project-intro h1 {
+  font-size: 64px;
+  line-height: 1.05;
+  margin-top: 4px;
+}
+.project-intro .kicker-line {
+  font-family: var(--hand-thin);
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+}
+.project-intro .kicker-line .org-mention {
+  color: var(--red-marker);
+  font-family: var(--hand);
+  font-size: 22px;
+  font-weight: 600;
+}
+.role-line {
+  font-family: var(--hand);
+  font-size: 22px;
+  color: var(--ink-soft);
+  margin: 14px 0 0;
+  transform: rotate(-0.5deg);
+}
+.role-line .role-tag-small {
+  font-family: var(--hand-thin);
+  font-size: 16px;
+  color: var(--ink-faded);
+  margin-right: 6px;
+}
+.role-line em {
+  font-style: normal;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.mini-heading {
+  display: inline-block;
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--ink);
+  margin: 0 0 12px;
+  transform: rotate(-1deg);
+  position: relative;
+}
+.mini-heading::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -6px;
+  bottom: -2px;
+  height: 9px;
+  background: var(--yellow-hi-soft);
+  z-index: -1;
+  transform: skewX(-4deg);
+}
+
+.stack-row {
+  margin-bottom: 36px;
+}
+.stack-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 8px;
+}
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-family: var(--hand);
+  font-size: 17px;
+  color: var(--ink);
+  background: var(--sticky-yellow);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 3px 4px -1px rgba(60, 50, 30, 0.18);
+  transform: rotate(-1deg);
+  position: relative;
+  transition: transform 0.2s;
+}
+.tag:hover {
+  transform: rotate(0) scale(1.05);
+}
+.tag.tag-1 {
+  background: var(--sticky-yellow);
+  transform: rotate(-1.5deg);
+}
+.tag.tag-2 {
+  background: var(--sticky-pink);
+  transform: rotate(1deg);
+}
+.tag.tag-3 {
+  background: var(--sticky-blue);
+  transform: rotate(-1deg);
+}
+.tag.tag-4 {
+  background: var(--sticky-green);
+  transform: rotate(1.5deg);
+}
+.tag.tag-5 {
+  background: var(--sticky-orange);
+  transform: rotate(-1deg);
+}
+
+.summary-block {
+  margin-bottom: 36px;
+}
+.long-text {
+  font-size: 17.5px;
+  line-height: 1.75;
+  margin: 0;
+  color: var(--ink);
+}
+
+.highlights-block {
+  margin-bottom: 48px;
+}
+.bullets.star-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bullets.star-bullets li {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 10px;
+}
+.bullets.star-bullets li::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--red-marker);
+  font-size: 18px;
+  transform: rotate(-10deg);
+}
+
+.related {
+  margin-top: 56px;
+  border-top: 1.5px dashed var(--ink-faded);
+  padding-top: 28px;
+}
+.related-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 760px) {
   .paper::before {
@@ -580,10 +875,25 @@ footer .signature {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     min-height: 0;
   }
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
   .projects-hint {
     position: static;
     margin-bottom: 14px;
     display: block;
+  }
+  .project-intro h1 {
+    font-size: 44px;
+  }
+  .project-corner {
+    display: none;
+  }
+  .teaser-link {
+    font-size: 24px;
+  }
+  .teaser-link::after {
+    right: 60px;
   }
   #cursor-canvas {
     display: none;
