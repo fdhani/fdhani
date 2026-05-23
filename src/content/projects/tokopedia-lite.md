@@ -1,6 +1,6 @@
 ---
 name: Tokopedia Lite
-short: Mobile web for Tokopedia (React) — lighter footprint.
+short: Mobile web for Tokopedia in React, with a lighter footprint.
 org: Tokopedia
 period: 2018 – 2019
 role: UX Engineer / Frontend
@@ -9,7 +9,7 @@ color: orange
 order: 5
 ---
 
-Built **Tokopedia Lite** — a stripped-down mobile-web version of Tokopedia aimed at lower-bandwidth devices and users who did not want to install the full app. Shipped pixel-accurate UI from the design team using **React**.
+Built **Tokopedia Lite**, a stripped-down mobile-web version of Tokopedia aimed at lower-bandwidth devices and users who did not want to install the full app. Shipped pixel-accurate UI from the design team using **React**.
 
 ## Highlights
 

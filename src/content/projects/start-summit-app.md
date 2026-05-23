@@ -9,7 +9,7 @@ color: green
 order: 4
 ---
 
-Initiated and led the R&D effort to use **Flutter** as a shared codebase across Tokopedia's mobile and web orgs. The first production deliverable was the **START Summit** application — built by web and iOS engineers together — that improved the on-the-ground experience for event participants.
+Initiated and led the R&D effort to use **Flutter** as a shared codebase across Tokopedia's mobile and web orgs. The first production deliverable was the **START Summit** application, built by web and iOS engineers together, which improved the on-the-ground experience for event participants.
 
 ## Highlights
 
