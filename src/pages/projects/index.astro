@@ -1,6 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { RESUME } from '../../data/resume';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -12,7 +17,6 @@ const base = import.meta.env.BASE_URL;
 
   <div class="paper">
     <main>
-      <!-- back link -->
       <a class="nav-back" href={base}>
         <svg width="36" height="20" viewBox="0 0 36 20" aria-hidden="true">
           <path
@@ -34,7 +38,6 @@ const base = import.meta.env.BASE_URL;
         back to the main page
       </a>
 
-      <!-- ====================== HEADER ====================== -->
       <header class="intro">
         <h1>
           projects
@@ -55,7 +58,7 @@ const base = import.meta.env.BASE_URL;
           </svg>
         </h1>
         <div class="role-tag">
-          {RESUME.projects.length} <em>selected pieces</em> — click any note to read more
+          {projects.length} <em>selected pieces</em> — click any note to read more
         </div>
         <p class="location">
           most are production work across <span class="org-mention">Omni HR</span>,
@@ -63,7 +66,6 @@ const base = import.meta.env.BASE_URL;
         </p>
       </header>
 
-      <!-- ====================== STICKY NOTE GRID ====================== -->
       <section class="projects-page-section reveal">
         <div class="projects projects-grid">
           <div class="projects-hint">
@@ -88,12 +90,15 @@ const base = import.meta.env.BASE_URL;
           </div>
 
           {
-            RESUME.projects.map((p) => (
-              <a class={`sticky sticky-${p.color} sticky-link`} href={`${base}projects/${p.slug}/`}>
+            projects.map((p) => (
+              <a
+                class={`sticky sticky-${p.data.color} sticky-link`}
+                href={`${base}projects/${p.slug}/`}
+              >
                 <span class="pin" aria-hidden="true" />
-                <span class="kicker">{p.period}</span>
-                <h3>{p.name}</h3>
-                <p>{p.short}</p>
+                <span class="kicker">{p.data.period}</span>
+                <h3>{p.data.name}</h3>
+                <p>{p.data.short}</p>
                 <span class="open-hint">read →</span>
               </a>
             ))
@@ -111,7 +116,6 @@ const base = import.meta.env.BASE_URL;
   </div>
 
   <script is:inline>
-    // Reveal + scroll-draw observer
     (function () {
       if (typeof IntersectionObserver === 'undefined') {
         document
@@ -135,13 +139,11 @@ const base = import.meta.env.BASE_URL;
         .forEach((el) => io.observe(el));
     })();
 
-    // Pencil cursor trail
     (function () {
       const canvas = document.getElementById('cursor-canvas');
       if (!canvas) return;
       if (window.matchMedia('(pointer: coarse)').matches) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
       function size() {
@@ -153,7 +155,6 @@ const base = import.meta.env.BASE_URL;
       }
       size();
       window.addEventListener('resize', size);
-
       let last = null;
       let lastTime = 0;
       window.addEventListener('mousemove', (e) => {

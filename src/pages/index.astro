@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { RESUME } from '../data/resume';
+import { getCollection } from 'astro:content';
+const projectCount = (await getCollection('projects')).length;
 
 const yearRange = (when: string) => {
   const parts = when.split(/[–-]/).map((p) => p.trim());
@@ -182,7 +184,7 @@ const yearRange = (when: string) => {
         </h2>
 
         <p class="teaser-blurb">
-          {RESUME.projects.length} selected pieces of work — production HR modules, large platform
+          {projectCount} selected pieces of work — production HR modules, large platform
           migrations, performance work, and the occasional landing page. Each has its own little
           page.
         </p>
