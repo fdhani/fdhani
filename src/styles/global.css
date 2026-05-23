@@ -421,7 +421,7 @@ main.page {
   transform: translateX(4px);
 }
 
-/* sheen — a soft highlight that travels left→right on hover */
+/* sheen: a soft highlight that travels left to right on hover */
 .cta-primary::before {
   content: '';
   position: absolute;
@@ -1164,6 +1164,9 @@ main.page {
    ============================================================ */
 .about-intro {
   margin-bottom: 28px;
+}
+.about-intro .lead + .lead {
+  margin-top: 14px;
 }
 .about-intro .about-meta {
   display: flex;
