@@ -42,7 +42,6 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
     sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
-  --font-cursive: 'Caveat', 'Brush Script MT', cursive;
   --container: 680px;
   --container-wide: 820px;
   color-scheme: dark;
@@ -266,17 +265,46 @@ main.page {
 .hero h1 .accent {
   color: var(--accent);
 }
-.hero h1 .cursive {
-  font-family: var(--font-cursive);
-  font-weight: 700;
-  font-size: 1.25em;
-  line-height: 0.95;
-  letter-spacing: 0;
+
+/* role that cycles through job titles on the home hero */
+.role-rotate {
   display: inline-block;
-  transform: translateY(2px);
+  height: 1.15em;
+  line-height: 1.15;
+  overflow: hidden;
+  vertical-align: bottom;
+  position: relative;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
 }
-.hero h1 .cursive.accent {
-  color: var(--accent);
+.role-rotate-inner {
+  display: flex;
+  flex-direction: column;
+  animation: role-cycle 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.role-rotate-inner > span {
+  display: block;
+  height: 1.15em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+@keyframes role-cycle {
+  0%, 25%   { transform: translateY(0); }
+  30%, 55%  { transform: translateY(-100%); }
+  60%, 85%  { transform: translateY(-200%); }
+  90%, 100% { transform: translateY(-300%); }
 }
 .hero .lead {
   font-size: 17px;
@@ -393,7 +421,7 @@ main.page {
   transform: translateX(4px);
 }
 
-/* sheen — a soft highlight that travels left→right on hover */
+/* sheen: a soft highlight that travels left to right on hover */
 .cta-primary::before {
   content: '';
   position: absolute;
@@ -1137,6 +1165,9 @@ main.page {
 .about-intro {
   margin-bottom: 28px;
 }
+.about-intro .lead + .lead {
+  margin-top: 14px;
+}
 .about-intro .about-meta {
   display: flex;
   flex-wrap: wrap;
@@ -1644,5 +1675,8 @@ main.page {
   .cta-primary,
   .cta-primary .arrow {
     transition: none;
+  }
+  .role-rotate-inner {
+    animation: none;
   }
 }
