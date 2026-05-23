@@ -117,17 +117,6 @@ export const RESUME = {
       ],
     },
     {
-      org: 'impruvmi',
-      role: 'UI/UX Designer',
-      when: 'Oct 2015 – Jul 2018',
-      loc: 'Yogyakarta, Indonesia',
-      startY: 2015.75,
-      endY: 2018.5,
-      bullets: [
-        'Designed UI/UX for a Yogyakarta-based startup, plus marketing collateral.',
-      ],
-    },
-    {
       org: 'Ralali.com',
       role: 'Front-End Developer & UI Designer',
       when: 'Feb 2017 – Jun 2018',
