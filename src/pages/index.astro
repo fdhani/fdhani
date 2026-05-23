@@ -2,7 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import { RESUME } from '../data/resume';
 import { getCollection } from 'astro:content';
-const projectCount = (await getCollection('projects')).length;
+
+const allProjects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const featured = allProjects.slice(0, 4);
+const base = import.meta.env.BASE_URL;
 
 const yearRange = (when: string) => {
   const parts = when.split(/[–-]/).map((p) => p.trim());
@@ -16,367 +21,157 @@ const yearRange = (when: string) => {
   const end = grabYear(parts[1] || '');
   if (!end) return start;
   if (start === end) return start;
-  return `${start}–${end === 'now' ? 'now' : end.slice(-2)}`;
+  return `${start} – ${end === 'now' ? 'now' : end.slice(-2)}`;
 };
 ---
 
-<Layout>
-  <canvas id="cursor-canvas" aria-hidden="true"></canvas>
-
-  <div class="paper">
-    <main>
-      <!-- ====================== HEADER ====================== -->
-      <header class="intro">
+<Layout activeNav="home">
+  <main class="page">
+    <div class="container">
+      <!-- ============================ HERO ============================ -->
+      <section class="hero">
+        <p class="eyebrow">available for interesting problems</p>
         <h1>
-          F. Dhani Achmad
-          <svg
-            class="underline draw-on-scroll in-view"
-            viewBox="0 0 540 22"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M4 14 C 80 6, 160 18, 240 10 S 380 16, 460 8 S 520 14, 536 12"
-              fill="none"
-              stroke="#d62828"
-              stroke-width="3.5"
-              stroke-linecap="round"
-              style="--len: 700"
-            ></path>
-          </svg>
+          Hi, I'm Dhani — <span class="accent">frontend engineer</span> building production product surfaces.
         </h1>
+        <p class="lead">
+          I'm currently a <strong>Software Engineer at Omni HR (Singapore)</strong>,
+          working on Attendance, Time Off, and Payroll. Previously led frontend at
+          <strong>Tokopedia</strong> and <strong>99 Group</strong>. I care about
+          clean systems, performance, and the bits of design that survive contact
+          with real users.
+        </p>
 
-        <svg
-          class="arrow-to-role draw-on-scroll in-view"
-          viewBox="0 0 100 80"
-          aria-hidden="true"
-        >
-          <path
-            d="M85 8 C 65 22, 50 40, 36 62"
-            fill="none"
-            stroke="#1e2a5e"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            style="--len: 100"
-          ></path>
-          <path
-            d="M30 56 L 36 64 L 44 60"
-            fill="none"
-            stroke="#1e2a5e"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            style="--len: 30"
-          ></path>
-        </svg>
-
-        <div class="role-tag">
-          frontend <em>engineer</em> — currently at Omni HR (sg)
-        </div>
-        <p class="location">
-          <span class="pin" aria-hidden="true">
-            <svg width="14" height="18" viewBox="0 0 14 18">
-              <path
-                d="M7 1 C 3 1, 1 4, 1 7 C 1 11, 7 17, 7 17 C 7 17, 13 11, 13 7 C 13 4, 11 1, 7 1 Z"
-                fill="#d62828"
-                stroke="#7a1010"
-                stroke-width="0.8"
-              ></path>
-              <circle cx="7" cy="7" r="2" fill="#fdf6e3"></circle>
+        <div class="meta">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
+            West Java, Indonesia
           </span>
-          West Java, Indonesia
-        </p>
-
-        <div class="links">
-          <a href={`mailto:${RESUME.contact.email}`}>email</a>
-          <a href={RESUME.contact.linkedin} target="_blank" rel="noopener">linkedin</a>
-          <a href={RESUME.contact.github} target="_blank" rel="noopener">github</a>
-          <a href={RESUME.contact.behance} target="_blank" rel="noopener">behance</a>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            8+ years in frontend
+          </span>
         </div>
-      </header>
 
-      <!-- ====================== TOP NAV (other pages) ====================== -->
-      <nav class="page-tabs" aria-label="Other pages">
-        <a class="page-tab tab-projects" href={`${import.meta.env.BASE_URL}projects/`}>
-          <span class="tab-corner" aria-hidden="true"></span>
-          <span class="tab-label">projects</span>
-          <span class="tab-sub">{projectCount} pieces of work</span>
-          <svg class="tab-arrow" width="44" height="22" viewBox="0 0 44 22" aria-hidden="true">
-            <path
-              d="M2 12 C 14 4, 26 22, 40 10"
-              fill="none"
-              stroke="#d62828"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            ></path>
-            <path
-              d="M34 4 L 40 10 L 36 16"
-              fill="none"
-              stroke="#d62828"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </a>
-        <a class="page-tab tab-education" href={`${import.meta.env.BASE_URL}education/`}>
-          <span class="tab-corner" aria-hidden="true"></span>
-          <span class="tab-label">education</span>
-          <span class="tab-sub">schools, certs, awards</span>
-          <svg class="tab-arrow" width="44" height="22" viewBox="0 0 44 22" aria-hidden="true">
-            <path
-              d="M2 12 C 14 4, 26 22, 40 10"
-              fill="none"
-              stroke="#d62828"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            ></path>
-            <path
-              d="M34 4 L 40 10 L 36 16"
-              fill="none"
-              stroke="#d62828"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </a>
-      </nav>
+        <div class="socials">
+          <a href={`mailto:${RESUME.contact.email}`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            email
+          </a>
+          <a href={RESUME.contact.github} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.01c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.19 1.84 1.19 3.09 0 4.42-2.69 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" />
+            </svg>
+            github
+          </a>
+          <a href={RESUME.contact.linkedin} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.56c0-1.32-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.65H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .77 23.2 0 22.22 0z" />
+            </svg>
+            linkedin
+          </a>
+          <a href={RESUME.contact.behance} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 7h-7V5h7v2zM15.5 17h-2.85c0-1.07-.3-2.05-.96-2.7.36-.32.6-.78.6-1.42 0-1.55-1-2.2-2.5-2.2H6v9.55h3.95c1.7 0 3.05-.85 3.05-2.5 0-.95-.55-1.65-1.4-2 .65-.4 1.05-1.05 1.05-1.85 0-.07 0-.13-.02-.2h2.87c0 1.4 1.1 2.2 2.65 2.2 1.8 0 2.5-1 2.55-1.85h-2.05c-.05.35-.4.7-.95.7-.7 0-1.05-.5-1.05-1.15h4.1c.05-.25.05-.5.05-.7C20.8 14.2 19.7 13 17.5 13s-3.45 1.4-3.45 3.5c0 .15 0 .35.05.5zM8.5 13.7H10c.7 0 1.15.3 1.15.95 0 .65-.45.95-1.15.95H8.5v-1.9zm0 4h1.7c.85 0 1.35.4 1.35 1.1 0 .75-.5 1.15-1.35 1.15H8.5v-2.25zm10-3.45c.65 0 .95.45 1 1H17.5c.05-.55.4-1 1-1z" />
+            </svg>
+            behance
+          </a>
+        </div>
+      </section>
 
-      <!-- ====================== ABOUT ====================== -->
-      <section class="about reveal">
-        <h2 class="section-heading">
-          about me
-          <svg class="box draw-on-scroll" viewBox="0 0 220 78" preserveAspectRatio="none" aria-hidden="true">
-            <path
-              d="M8 12 C 60 6, 140 4, 212 10 C 216 28, 214 58, 210 72 C 140 76, 60 74, 6 70 C 4 50, 4 28, 8 12 Z"
-              fill="none"
-              stroke="#1e2a5e"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="--len: 600"
-            ></path>
-          </svg>
-        </h2>
-
+      <!-- ============================ ABOUT ============================ -->
+      <section class="section about reveal">
+        <div class="section-head">
+          <h2>about</h2>
+        </div>
         <p>
-          Frontend engineer with a <span class="highlight">designer's eye</span> and an
-          <span class="scribble">AI tinkerer's</span> curiosity. I've spent the last
-          <span class="highlight">eight years</span> building product surfaces at
-          Tokopedia, 99 Group, and now Omni HR — usually somewhere between design systems
-          and platform work.
+          Frontend engineer with a designer's eye and an AI tinkerer's curiosity.
+          The last <strong>eight years</strong> have been spent shipping product
+          surfaces at Tokopedia, 99 Group, and now Omni HR — usually somewhere
+          between design systems and platform work.
         </p>
         <p>
-          I like turning legacy codebases into tidy systems, mentoring engineers, and
-          squeezing performance out of pages that millions of people use. Outside the
-          editor: UI/UX design, languages (en/fr/id), and the occasional pitch
-          competition.
+          I like turning legacy codebases into tidy systems, mentoring engineers,
+          and squeezing performance out of pages used by millions. Outside the
+          editor: UI/UX, languages (en/fr/id), and the occasional pitch competition.
         </p>
       </section>
 
-      <!-- ====================== EXPERIENCE ====================== -->
-      <section class="experience reveal">
-        <h2 class="section-heading">
-          experience
-          <svg class="box draw-on-scroll" viewBox="0 0 240 78" preserveAspectRatio="none" aria-hidden="true">
-            <path
-              d="M10 14 C 70 4, 160 6, 232 12 C 236 30, 236 56, 230 72 C 160 78, 70 76, 8 68 C 4 48, 4 28, 10 14 Z"
-              fill="none"
-              stroke="#1e2a5e"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="--len: 640"
-            ></path>
-          </svg>
-        </h2>
-
-        {
-          RESUME.experience.map((e, i) => (
-            <div class="entry reveal">
-              <div class="margin-note">
-                {yearRange(e.when)}
-                <span class="small">{e.loc}</span>
-              </div>
-              <div class="role">{e.role}</div>
-              <div class="org-row">
-                @ <span class="org">{e.org}</span>
-              </div>
-              <ul class="bullets">
-                {e.bullets.map((b) => (
-                  <li>{b}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </section>
-
-      <!-- ====================== FOOTER ====================== -->
-      <footer class="reveal">
-        <p class="signed">— signed, dhani ✎</p>
-        <span class="signature">
-          {RESUME.contact.email} · {new Date().getFullYear()}
-        </span>
-      </footer>
-    </main>
-  </div>
-
-  <script is:inline>
-    // ---------- Reveal & scroll-draw via IntersectionObserver ----------
-    (function () {
-      if (typeof IntersectionObserver === 'undefined') {
-        document
-          .querySelectorAll('.reveal, .draw-on-scroll')
-          .forEach((el) => el.classList.add('in-view'));
-        return;
-      }
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in-view');
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0, rootMargin: '0px 0px 200px 0px' }
-      );
-      document
-        .querySelectorAll('.reveal, .draw-on-scroll:not(.in-view)')
-        .forEach((el) => io.observe(el));
-    })();
-
-    // ---------- Draggable sticky notes ----------
-    (function () {
-      const notes = Array.from(document.querySelectorAll('.sticky[data-draggable="true"]'));
-      const dragState = new WeakMap();
-
-      function startDrag(note, ev) {
-        const p = ev.touches ? ev.touches[0] : ev;
-        const rect = note.getBoundingClientRect();
-        const state = {
-          startX: p.clientX,
-          startY: p.clientY,
-          dx: 0,
-          dy: 0,
-          // current translate already applied (from previous drags)
-          baseDx: parseFloat(note.dataset.dx || '0'),
-          baseDy: parseFloat(note.dataset.dy || '0'),
-          baseRot: parseFloat(note.dataset.rot || getInitialRotation(note)),
-        };
-        dragState.set(note, state);
-        note.classList.add('dragging');
-        ev.preventDefault();
-      }
-
-      function getInitialRotation(note) {
-        // pull the inline (rotate) from computed transform
-        const t = getComputedStyle(note).transform;
-        if (!t || t === 'none') return 0;
-        const m = t.match(/matrix\(([^)]+)\)/);
-        if (!m) return 0;
-        const v = m[1].split(',').map(parseFloat);
-        return Math.atan2(v[1], v[0]) * (180 / Math.PI);
-      }
-
-      function moveDrag(ev) {
-        const target = document.querySelector('.sticky.dragging');
-        if (!target) return;
-        const p = ev.touches ? ev.touches[0] : ev;
-        const s = dragState.get(target);
-        if (!s) return;
-        s.dx = p.clientX - s.startX;
-        s.dy = p.clientY - s.startY;
-        target.style.transform =
-          'translate(' +
-          (s.baseDx + s.dx) +
-          'px, ' +
-          (s.baseDy + s.dy) +
-          'px) rotate(' +
-          s.baseRot +
-          'deg)';
-        ev.preventDefault();
-      }
-
-      function endDrag() {
-        const target = document.querySelector('.sticky.dragging');
-        if (!target) return;
-        const s = dragState.get(target);
-        if (s) {
-          target.dataset.dx = String(s.baseDx + s.dx);
-          target.dataset.dy = String(s.baseDy + s.dy);
-          target.dataset.rot = String(s.baseRot);
-        }
-        target.classList.remove('dragging');
-      }
-
-      notes.forEach((note) => {
-        note.addEventListener('mousedown', (e) => startDrag(note, e));
-        note.addEventListener('touchstart', (e) => startDrag(note, e), { passive: false });
-      });
-      window.addEventListener('mousemove', moveDrag);
-      window.addEventListener('touchmove', moveDrag, { passive: false });
-      window.addEventListener('mouseup', endDrag);
-      window.addEventListener('touchend', endDrag);
-      window.addEventListener('mouseleave', endDrag);
-    })();
-
-    // ---------- Pencil cursor trail ----------
-    (function () {
-      const canvas = document.getElementById('cursor-canvas');
-      if (!canvas) return;
-      const mq = window.matchMedia('(pointer: coarse)');
-      if (mq.matches) return; // skip on touch devices
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (reduced.matches) return;
-
-      const ctx = canvas.getContext('2d');
-      let w = (canvas.width = window.innerWidth * devicePixelRatio);
-      let h = (canvas.height = window.innerHeight * devicePixelRatio);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-
-      window.addEventListener('resize', () => {
-        w = canvas.width = window.innerWidth * devicePixelRatio;
-        h = canvas.height = window.innerHeight * devicePixelRatio;
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = window.innerHeight + 'px';
-        ctx.scale(devicePixelRatio, devicePixelRatio);
-      });
-
-      let last = null;
-      let lastTime = 0;
-      window.addEventListener('mousemove', (e) => {
-        const now = performance.now();
-        const dt = now - lastTime;
-        lastTime = now;
-        if (last && dt < 80) {
-          const speed = Math.hypot(e.clientX - last.x, e.clientY - last.y);
-          if (speed > 1.5) {
-            ctx.strokeStyle = 'rgba(60, 70, 110, 0.45)';
-            ctx.lineWidth = Math.min(1.4, 0.6 + speed * 0.03);
-            ctx.lineCap = 'round';
-            ctx.beginPath();
-            ctx.moveTo(last.x, last.y);
-            ctx.lineTo(e.clientX, e.clientY);
-            ctx.stroke();
+      <!-- ============================ PROJECTS ============================ -->
+      <section class="section reveal">
+        <div class="section-head">
+          <h2>featured work</h2>
+          <a class="more" href={`${base}projects/`}>all projects →</a>
+        </div>
+        <div class="cards">
+          {
+            featured.map((p) => (
+              <a class="card" href={`${base}projects/${p.slug}/`}>
+                <div class="head">
+                  <h3 class="name">{p.data.name}</h3>
+                  <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </div>
+                <p class="desc">{p.data.short}</p>
+                <div class="stack">
+                  <span class="chip">{p.data.org}</span>
+                  <span class="chip">{p.data.period}</span>
+                </div>
+              </a>
+            ))
           }
-        }
-        last = { x: e.clientX, y: e.clientY };
-      });
+        </div>
+      </section>
 
-      // slowly fade old marks so canvas doesn't fill up
-      setInterval(() => {
-        ctx.save();
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = 'rgba(0,0,0,0.045)';
-        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-        ctx.restore();
-      }, 90);
-    })();
-  </script>
+      <!-- ============================ BLOG TEASER ============================ -->
+      <section class="section reveal">
+        <div class="section-head">
+          <h2>writing</h2>
+          <a class="more" href={`${base}blog/`}>visit blog →</a>
+        </div>
+        <p style="color: var(--text-muted); font-size: 15px; margin: 0;">
+          Notes on frontend, performance, and AI-assisted dev — in the works.
+        </p>
+      </section>
+
+      <!-- ============================ EXPERIENCE ============================ -->
+      <section class="section reveal">
+        <div class="section-head">
+          <h2>experience</h2>
+        </div>
+        <div class="timeline">
+          {
+            RESUME.experience.map((e) => (
+              <div class="exp">
+                <div class="when">
+                  {yearRange(e.when)}
+                  <span class="loc">{e.loc}</span>
+                </div>
+                <div class="body">
+                  <p class="role">{e.role}</p>
+                  <p class="org">@ {e.org}</p>
+                  <ul class="bullets">
+                    {e.bullets.map((b) => (
+                      <li>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
 </Layout>
