@@ -1,14 +1,416 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CRT from '../components/CRT.astro';
-import MatrixRain from '../components/MatrixRain.astro';
-import BootSequence from '../components/BootSequence.astro';
-import Terminal from '../components/Terminal.astro';
+import { RESUME } from '../data/resume';
+
+const yearRange = (when: string) => {
+  const parts = when.split(/[–-]/).map((p) => p.trim());
+  const grabYear = (s: string) => {
+    const m = s.match(/(20\d{2}|19\d{2})/);
+    if (m) return m[1];
+    if (/present/i.test(s)) return 'now';
+    return s;
+  };
+  const start = grabYear(parts[0]);
+  const end = grabYear(parts[1] || '');
+  if (!end) return start;
+  if (start === end) return start;
+  return `${start}–${end === 'now' ? 'now' : end.slice(-2)}`;
+};
 ---
 
 <Layout>
-  <CRT />
-  <MatrixRain />
-  <BootSequence />
-  <Terminal />
+  <canvas id="cursor-canvas" aria-hidden="true"></canvas>
+
+  <div class="paper">
+    <main>
+      <!-- ====================== HEADER ====================== -->
+      <header class="intro">
+        <h1>
+          F. Dhani Achmad
+          <svg
+            class="underline draw-on-scroll in-view"
+            viewBox="0 0 540 22"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 14 C 80 6, 160 18, 240 10 S 380 16, 460 8 S 520 14, 536 12"
+              fill="none"
+              stroke="#d62828"
+              stroke-width="3.5"
+              stroke-linecap="round"
+              style="--len: 700"
+            ></path>
+          </svg>
+        </h1>
+
+        <svg
+          class="arrow-to-role draw-on-scroll in-view"
+          viewBox="0 0 100 80"
+          aria-hidden="true"
+        >
+          <path
+            d="M85 8 C 65 22, 50 40, 36 62"
+            fill="none"
+            stroke="#1e2a5e"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            style="--len: 100"
+          ></path>
+          <path
+            d="M30 56 L 36 64 L 44 60"
+            fill="none"
+            stroke="#1e2a5e"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="--len: 30"
+          ></path>
+        </svg>
+
+        <div class="role-tag">
+          frontend <em>engineer</em> — currently at Omni HR (sg)
+        </div>
+        <p class="location">
+          <span class="pin" aria-hidden="true">
+            <svg width="14" height="18" viewBox="0 0 14 18">
+              <path
+                d="M7 1 C 3 1, 1 4, 1 7 C 1 11, 7 17, 7 17 C 7 17, 13 11, 13 7 C 13 4, 11 1, 7 1 Z"
+                fill="#d62828"
+                stroke="#7a1010"
+                stroke-width="0.8"
+              ></path>
+              <circle cx="7" cy="7" r="2" fill="#fdf6e3"></circle>
+            </svg>
+          </span>
+          West Java, Indonesia
+        </p>
+
+        <div class="links">
+          <a href={`mailto:${RESUME.contact.email}`}>email</a>
+          <a href={RESUME.contact.linkedin} target="_blank" rel="noopener">linkedin</a>
+          <a href={RESUME.contact.github} target="_blank" rel="noopener">github</a>
+          <a href={RESUME.contact.behance} target="_blank" rel="noopener">behance</a>
+        </div>
+      </header>
+
+      <!-- ====================== ABOUT ====================== -->
+      <section class="about reveal">
+        <h2 class="section-heading">
+          about me
+          <svg class="box draw-on-scroll" viewBox="0 0 220 78" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M8 12 C 60 6, 140 4, 212 10 C 216 28, 214 58, 210 72 C 140 76, 60 74, 6 70 C 4 50, 4 28, 8 12 Z"
+              fill="none"
+              stroke="#1e2a5e"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="--len: 600"
+            ></path>
+          </svg>
+        </h2>
+
+        <p>
+          Frontend engineer with a <span class="highlight">designer's eye</span> and an
+          <span class="scribble">AI tinkerer's</span> curiosity. I've spent the last
+          <span class="highlight">eight years</span> building product surfaces at
+          Tokopedia, 99 Group, and now Omni HR — usually somewhere between design systems
+          and platform work.
+        </p>
+        <p>
+          I like turning legacy codebases into tidy systems, mentoring engineers, and
+          squeezing performance out of pages that millions of people use. Outside the
+          editor: UI/UX design, languages (en/fr/id), and the occasional pitch
+          competition.
+        </p>
+      </section>
+
+      <!-- ====================== EXPERIENCE ====================== -->
+      <section class="experience reveal">
+        <h2 class="section-heading">
+          experience
+          <svg class="box draw-on-scroll" viewBox="0 0 240 78" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M10 14 C 70 4, 160 6, 232 12 C 236 30, 236 56, 230 72 C 160 78, 70 76, 8 68 C 4 48, 4 28, 10 14 Z"
+              fill="none"
+              stroke="#1e2a5e"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="--len: 640"
+            ></path>
+          </svg>
+        </h2>
+
+        {
+          RESUME.experience.map((e, i) => (
+            <div class="entry reveal">
+              <div class="margin-note">
+                {yearRange(e.when)}
+                <span class="small">{e.loc}</span>
+              </div>
+              <div class="role">{e.role}</div>
+              <div class="org-row">
+                @ <span class="org">{e.org}</span>
+              </div>
+              <ul class="bullets">
+                {e.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- ====================== PROJECTS ====================== -->
+      <section class="projects-section reveal">
+        <h2 class="section-heading">
+          projects
+          <svg class="box draw-on-scroll" viewBox="0 0 200 78" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M8 14 C 50 6, 130 6, 192 12 C 196 28, 194 56, 188 72 C 130 76, 50 74, 6 68 C 4 48, 4 28, 8 14 Z"
+              fill="none"
+              stroke="#1e2a5e"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="--len: 600"
+            ></path>
+          </svg>
+        </h2>
+
+        <div class="projects" id="projects">
+          <div class="projects-hint">
+            <svg class="arrow" width="44" height="24" viewBox="0 0 44 24" aria-hidden="true">
+              <path
+                d="M2 14 C 14 4, 26 22, 40 10"
+                fill="none"
+                stroke="#7a8398"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M34 6 L 40 10 L 36 16"
+                fill="none"
+                stroke="#7a8398"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            try dragging me!
+          </div>
+
+          {
+            RESUME.projects.map(([name, desc]) => (
+              <article class="sticky" data-draggable="true">
+                <span class="pin" aria-hidden="true" />
+                <h3>{name}</h3>
+                <p>{desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ====================== EDUCATION ====================== -->
+      <section class="education reveal">
+        <h2 class="section-heading">
+          education
+          <svg class="box draw-on-scroll" viewBox="0 0 220 78" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M8 14 C 60 6, 140 4, 212 12 C 216 30, 214 56, 208 72 C 140 76, 60 74, 6 68 C 4 48, 4 28, 8 14 Z"
+              fill="none"
+              stroke="#1e2a5e"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="--len: 600"
+            ></path>
+          </svg>
+        </h2>
+        <div class="education-list">
+          {
+            RESUME.education.map((edu) => (
+              <div class="edu-row">
+                <span class="bracket" aria-hidden="true">
+                  {'{'}
+                </span>
+                <div>
+                  <p class="school">{edu.school}</p>
+                  <p class="degree">{edu.degree}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ====================== FOOTER ====================== -->
+      <footer class="reveal">
+        <p class="signed">— signed, dhani ✎</p>
+        <span class="signature">
+          {RESUME.contact.email} · {new Date().getFullYear()}
+        </span>
+      </footer>
+    </main>
+  </div>
+
+  <script is:inline>
+    // ---------- Reveal & scroll-draw via IntersectionObserver ----------
+    (function () {
+      if (typeof IntersectionObserver === 'undefined') {
+        document
+          .querySelectorAll('.reveal, .draw-on-scroll')
+          .forEach((el) => el.classList.add('in-view'));
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+      document
+        .querySelectorAll('.reveal, .draw-on-scroll:not(.in-view)')
+        .forEach((el) => io.observe(el));
+    })();
+
+    // ---------- Draggable sticky notes ----------
+    (function () {
+      const notes = Array.from(document.querySelectorAll('.sticky[data-draggable="true"]'));
+      const dragState = new WeakMap();
+
+      function startDrag(note, ev) {
+        const p = ev.touches ? ev.touches[0] : ev;
+        const rect = note.getBoundingClientRect();
+        const state = {
+          startX: p.clientX,
+          startY: p.clientY,
+          dx: 0,
+          dy: 0,
+          // current translate already applied (from previous drags)
+          baseDx: parseFloat(note.dataset.dx || '0'),
+          baseDy: parseFloat(note.dataset.dy || '0'),
+          baseRot: parseFloat(note.dataset.rot || getInitialRotation(note)),
+        };
+        dragState.set(note, state);
+        note.classList.add('dragging');
+        ev.preventDefault();
+      }
+
+      function getInitialRotation(note) {
+        // pull the inline (rotate) from computed transform
+        const t = getComputedStyle(note).transform;
+        if (!t || t === 'none') return 0;
+        const m = t.match(/matrix\(([^)]+)\)/);
+        if (!m) return 0;
+        const v = m[1].split(',').map(parseFloat);
+        return Math.atan2(v[1], v[0]) * (180 / Math.PI);
+      }
+
+      function moveDrag(ev) {
+        const target = document.querySelector('.sticky.dragging');
+        if (!target) return;
+        const p = ev.touches ? ev.touches[0] : ev;
+        const s = dragState.get(target);
+        if (!s) return;
+        s.dx = p.clientX - s.startX;
+        s.dy = p.clientY - s.startY;
+        target.style.transform =
+          'translate(' +
+          (s.baseDx + s.dx) +
+          'px, ' +
+          (s.baseDy + s.dy) +
+          'px) rotate(' +
+          s.baseRot +
+          'deg)';
+        ev.preventDefault();
+      }
+
+      function endDrag() {
+        const target = document.querySelector('.sticky.dragging');
+        if (!target) return;
+        const s = dragState.get(target);
+        if (s) {
+          target.dataset.dx = String(s.baseDx + s.dx);
+          target.dataset.dy = String(s.baseDy + s.dy);
+          target.dataset.rot = String(s.baseRot);
+        }
+        target.classList.remove('dragging');
+      }
+
+      notes.forEach((note) => {
+        note.addEventListener('mousedown', (e) => startDrag(note, e));
+        note.addEventListener('touchstart', (e) => startDrag(note, e), { passive: false });
+      });
+      window.addEventListener('mousemove', moveDrag);
+      window.addEventListener('touchmove', moveDrag, { passive: false });
+      window.addEventListener('mouseup', endDrag);
+      window.addEventListener('touchend', endDrag);
+      window.addEventListener('mouseleave', endDrag);
+    })();
+
+    // ---------- Pencil cursor trail ----------
+    (function () {
+      const canvas = document.getElementById('cursor-canvas');
+      if (!canvas) return;
+      const mq = window.matchMedia('(pointer: coarse)');
+      if (mq.matches) return; // skip on touch devices
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (reduced.matches) return;
+
+      const ctx = canvas.getContext('2d');
+      let w = (canvas.width = window.innerWidth * devicePixelRatio);
+      let h = (canvas.height = window.innerHeight * devicePixelRatio);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth * devicePixelRatio;
+        h = canvas.height = window.innerHeight * devicePixelRatio;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+      });
+
+      let last = null;
+      let lastTime = 0;
+      window.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        const dt = now - lastTime;
+        lastTime = now;
+        if (last && dt < 80) {
+          const speed = Math.hypot(e.clientX - last.x, e.clientY - last.y);
+          if (speed > 1.5) {
+            ctx.strokeStyle = 'rgba(60, 70, 110, 0.45)';
+            ctx.lineWidth = Math.min(1.4, 0.6 + speed * 0.03);
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(last.x, last.y);
+            ctx.lineTo(e.clientX, e.clientY);
+            ctx.stroke();
+          }
+        }
+        last = { x: e.clientX, y: e.clientY };
+      });
+
+      // slowly fade old marks so canvas doesn't fill up
+      setInterval(() => {
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.045)';
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.restore();
+      }, 90);
+    })();
+  </script>
 </Layout>
