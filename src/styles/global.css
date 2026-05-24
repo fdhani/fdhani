@@ -266,31 +266,37 @@ main.page {
   color: var(--accent);
 }
 
-/* signature-style cursive for the name */
+/* cursive for the name */
 .hero h1 .cursive-name {
-  font-family: 'Story Script', 'Dancing Script', cursive;
-  font-weight: 400;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
   font-size: 1.2em;
   line-height: 0.95;
   display: inline-block;
   transform: translateY(2px);
 }
 
-/* role that cycles through job titles on the home hero — cursive, with a
-   left-to-right clip-path wipe in and out. Three roles share the same
-   grid cell so the parent sizes to the longest. Each role animates in
-   sequence via animation-delay derived from --i. */
+/* role that cycles through job titles on the home hero. Cursive text with
+   a teal highlight block and white text. Three roles share the same
+   inline-grid cell so the parent sizes to the longest. Each role plays
+   the clip-path keyframe with a delay derived from --i so they rotate
+   in sequence with a blank gap between. */
 .role-rotator {
   display: inline-grid;
   vertical-align: bottom;
   font-family: 'Dancing Script', cursive;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.2;
+  font-size: 1.15em;
+  line-height: 1.15;
 }
 .role-rotator > .role {
   grid-area: 1 / 1;
   white-space: nowrap;
+  display: inline-block;
+  padding: 2px 14px 4px;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 8px;
   clip-path: inset(0 100% 0 0);
   -webkit-clip-path: inset(0 100% 0 0);
   animation: role-cycle 13.5s cubic-bezier(0.65, 0, 0.35, 1) infinite both;
