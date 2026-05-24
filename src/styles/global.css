@@ -266,45 +266,43 @@ main.page {
   color: var(--accent);
 }
 
-/* role that cycles through job titles on the home hero */
-.role-rotate {
+/* signature-style cursive for the name */
+.hero h1 .cursive-name {
+  font-family: 'Story Script', 'Dancing Script', cursive;
+  font-weight: 400;
+  font-size: 1.2em;
+  line-height: 0.95;
   display: inline-block;
-  height: 1.15em;
-  line-height: 1.15;
-  overflow: hidden;
+  transform: translateY(2px);
+}
+
+/* role that cycles through job titles on the home hero — cursive, with a
+   left-to-right clip-path wipe in and out. Three roles share the same
+   grid cell so the parent sizes to the longest. Each role animates in
+   sequence via animation-delay derived from --i. */
+.role-rotator {
+  display: inline-grid;
   vertical-align: bottom;
-  position: relative;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 8%,
-    #000 92%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 8%,
-    #000 92%,
-    transparent 100%
-  );
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 1.25em;
+  line-height: 1.2;
 }
-.role-rotate-inner {
-  display: flex;
-  flex-direction: column;
-  animation: role-cycle 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-}
-.role-rotate-inner > span {
-  display: block;
-  height: 1.15em;
-  line-height: 1.15;
+.role-rotator > .role {
+  grid-area: 1 / 1;
   white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  animation: role-cycle 13.5s cubic-bezier(0.65, 0, 0.35, 1) infinite both;
+  animation-delay: calc(var(--i, 0) * 4.5s);
 }
+
 @keyframes role-cycle {
-  0%, 25%   { transform: translateY(0); }
-  30%, 55%  { transform: translateY(-100%); }
-  60%, 85%  { transform: translateY(-200%); }
-  90%, 100% { transform: translateY(-300%); }
+  0%   { clip-path: inset(0 100% 0 0);  -webkit-clip-path: inset(0 100% 0 0); }
+  4%   { clip-path: inset(0 0    0 0);  -webkit-clip-path: inset(0 0    0 0); }
+  22%  { clip-path: inset(0 0    0 0);  -webkit-clip-path: inset(0 0    0 0); }
+  26%  { clip-path: inset(0 0 0 100%);  -webkit-clip-path: inset(0 0 0 100%); }
+  100% { clip-path: inset(0 0 0 100%);  -webkit-clip-path: inset(0 0 0 100%); }
 }
 .hero .lead {
   font-size: 17px;
@@ -1676,7 +1674,13 @@ main.page {
   .cta-primary .arrow {
     transition: none;
   }
-  .role-rotate-inner {
+  .role-rotator > .role {
     animation: none;
+    clip-path: inset(0 100% 0 0);
+    -webkit-clip-path: inset(0 100% 0 0);
+  }
+  .role-rotator > .role[style*='--i: 0'] {
+    clip-path: inset(0 0 0 0);
+    -webkit-clip-path: inset(0 0 0 0);
   }
 }
