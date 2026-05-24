@@ -1,10 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Project lives at https://fdhani.github.io/fdhani/
 export default defineConfig({
-  site: 'https://fdhani.github.io',
-  base: '/fdhani/',
+  site: 'https://fdhani.vercel.app',
   trailingSlash: 'ignore',
   build: {
     assets: '_astro',
