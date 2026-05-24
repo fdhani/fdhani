@@ -13,7 +13,7 @@ F. Dhani Achmad — Frontend Engineer · West Java, Indonesia
 "Passion for web development and fascinated with the world of Artificial Intelligence."
 ```
 
-**→ Interactive portfolio:** <https://fdhani.vercel.app/>
+**→ Interactive portfolio:** <https://fdhani.com/>
 
 ```
 > dhani@github:~$ stack

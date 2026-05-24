@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://fdhani.vercel.app',
+  site: 'https://fdhani.com',
   trailingSlash: 'ignore',
   build: {
     assets: '_astro',
