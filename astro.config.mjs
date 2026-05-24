@@ -1,10 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Project lives at https://fdhani.github.io/fdhani/
+// Deployed to Vercel at the project's root path.
+// Once a custom domain is wired up, set `site` so canonical URLs,
+// sitemap entries, and OG tags resolve correctly.
 export default defineConfig({
-  site: 'https://fdhani.github.io',
-  base: '/fdhani/',
+  // site: 'https://your-domain.com',
   trailingSlash: 'ignore',
   build: {
     assets: '_astro',
