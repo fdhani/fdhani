@@ -13,7 +13,7 @@ F. Dhani Achmad — Frontend Engineer · West Java, Indonesia
 "Passion for web development and fascinated with the world of Artificial Intelligence."
 ```
 
-**→ Interactive portfolio:** <https://fdhani.github.io/fdhani/>
+**→ Interactive portfolio:** <https://fdhani.vercel.app/>
 
 ```
 > dhani@github:~$ stack
@@ -33,4 +33,4 @@ Software Engineer @ Omni HR (Singapore) — Attendance / Time Off / Payroll
   ✎  behance.net/dhaniforty8a69
 ```
 
-<sub>This repo also hosts the source for the portfolio site above — built with [Astro](https://astro.build), deployed to GitHub Pages on every push to `main`.</sub>
+<sub>This repo also hosts the source for the portfolio site above — built with [Astro](https://astro.build), deployed to Vercel on every push to `main`.</sub>
