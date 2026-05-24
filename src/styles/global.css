@@ -1244,22 +1244,26 @@ main.page {
     transform: translateX(-50%);
     z-index: 60;
     padding: 11px 20px;
-    background: var(--accent);
-    border: none;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
     border-radius: 999px;
     font-family: var(--font-mono);
     font-size: 13.5px;
     font-weight: 600;
-    color: #07221d;
+    color: var(--text);
     cursor: pointer;
-    box-shadow: 0 10px 28px -6px color-mix(in srgb, var(--accent) 60%, transparent),
-      0 4px 10px -2px rgba(0, 0, 0, 0.45);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow:
+      0 12px 28px -8px rgba(0, 0, 0, 0.55),
+      0 4px 10px -2px rgba(0, 0, 0, 0.35);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
   }
   :root[data-theme='light'] .mobile-nav-toggle {
-    color: #ffffff;
-    box-shadow: 0 10px 22px -6px color-mix(in srgb, var(--accent) 50%, transparent),
-      0 2px 6px -1px rgba(15, 23, 42, 0.18);
+    background: #ffffff;
+    border-color: var(--border-strong);
+    color: var(--text);
+    box-shadow:
+      0 10px 24px -8px rgba(15, 23, 42, 0.2),
+      0 2px 6px -1px rgba(15, 23, 42, 0.12);
   }
   .mobile-nav-toggle:active {
     transform: translateX(-50%) scale(0.97);
@@ -1267,22 +1271,17 @@ main.page {
   .mobile-nav-toggle .dot {
     width: 7px;
     height: 7px;
-    background: #07221d;
+    background: var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 6px rgba(7, 34, 29, 0.4);
-  }
-  :root[data-theme='light'] .mobile-nav-toggle .dot {
-    background: #ffffff;
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
   }
   .mobile-nav-toggle .chev {
-    transition: transform 0.2s ease;
-    color: currentColor;
-    opacity: 0.85;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: var(--text-muted);
   }
   body[data-mobile-nav='open'] .mobile-nav-toggle .chev {
     transform: rotate(180deg);
-    opacity: 1;
+    color: var(--accent);
   }
 
   .mobile-nav-scrim {
