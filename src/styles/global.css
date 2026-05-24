@@ -386,6 +386,13 @@ main.page {
     background 0.18s ease;
   isolation: isolate;
   overflow: hidden;
+  /* page-load entrance: spring in from a small/down offset, then settle */
+  animation: cta-enter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s backwards;
+}
+@keyframes cta-enter {
+  0%   { opacity: 0; transform: translateY(14px) scale(0.94); }
+  60%  { opacity: 1; transform: translateY(-3px) scale(1.04); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 :root[data-theme='light'] .cta-primary {
   color: #ffffff;
@@ -415,7 +422,8 @@ main.page {
   transform: translateX(4px);
 }
 
-/* sheen: a soft highlight that travels left to right on hover */
+/* sheen: a soft highlight that travels left to right.
+   Runs once on page load to draw the eye, and again on hover. */
 .cta-primary::before {
   content: '';
   position: absolute;
@@ -430,12 +438,18 @@ main.page {
   transform: translateX(-110%);
   pointer-events: none;
   z-index: 1;
+  animation: cta-sheen-load 1s ease 1.4s forwards;
 }
 .cta-primary:hover::before {
   animation: cta-sheen 0.85s ease forwards;
 }
 @keyframes cta-sheen {
-  to { transform: translateX(110%); }
+  from { transform: translateX(-110%); }
+  to   { transform: translateX(110%); }
+}
+@keyframes cta-sheen-load {
+  from { transform: translateX(-110%); }
+  to   { transform: translateX(110%); }
 }
 
 /* soft pulsing glow underneath, drawing the eye */
@@ -1668,6 +1682,12 @@ main.page {
   .cta-primary,
   .cta-primary .arrow {
     transition: none;
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .cta-primary::before {
+    animation: none;
   }
   .role-rotator > .role {
     animation: none;
