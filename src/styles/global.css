@@ -675,46 +675,11 @@ main.page {
 /* ============================================================
    BLOG
    ============================================================ */
-.post-list {
-  display: flex;
-  flex-direction: column;
-}
-.post-row {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 24px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-  text-decoration: none;
-  color: inherit;
-  transition: padding-left 0.2s ease;
-}
-.post-row:hover {
-  padding-left: 6px;
-}
-.post-row:last-child {
-  border-bottom: none;
-}
-.post-row .date {
+.card .card-body .kicker {
   font-family: var(--font-mono);
   font-size: 12.5px;
   color: var(--text-faint);
-  padding-top: 3px;
-}
-.post-row .title {
-  font-size: 15.5px;
-  font-weight: 500;
-  color: var(--text);
-  margin: 0;
-  line-height: 1.5;
-}
-.post-row:hover .title {
-  color: var(--accent);
-}
-.post-row .summary {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin: 4px 0 0;
+  margin: 0 0 6px;
 }
 
 .blog-empty {
