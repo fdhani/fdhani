@@ -9,6 +9,9 @@ const base = import.meta.env.BASE_URL;
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+const imgSrc = (img: string) =>
+  /^https?:\/\//.test(img) ? img : `${base}${img.replace(/^\//, '')}`;
 ---
 
 <Layout
@@ -53,16 +56,59 @@ const fmtDate = (d: Date) =>
           </div>
         ) : (
           <section class="reveal">
-            <div class="post-list">
-              {posts.map((post) => (
-                <a class="post-row" href={`${base}blog/${post.slug}/`}>
-                  <span class="date">{fmtDate(post.data.date)}</span>
-                  <div>
-                    <p class="title">{post.data.title}</p>
-                    <p class="summary">{post.data.summary}</p>
-                  </div>
-                </a>
-              ))}
+            <div class="cards">
+              {posts.map((post) => {
+                const isExternal = !!post.data.externalUrl;
+                const href = isExternal
+                  ? post.data.externalUrl!
+                  : `${base}blog/${post.slug}/`;
+                const linkAttrs = isExternal
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {};
+                return (
+                  <a
+                    class={`card ${post.data.heroImage ? 'has-image' : ''}`}
+                    href={href}
+                    {...linkAttrs}
+                  >
+                    {post.data.heroImage && (
+                      <div class="card-media">
+                        <img
+                          src={imgSrc(post.data.heroImage)}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    )}
+                    <div class="card-body">
+                      <p class="kicker">{fmtDate(post.data.date)}</p>
+                      <div class="head">
+                        <h3 class="name">{post.data.title}</h3>
+                        {isExternal && (
+                          <svg
+                            class="arrow"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            role="img"
+                            aria-label="External link"
+                          >
+                            <line x1="7" y1="17" x2="17" y2="7" />
+                            <polyline points="7 7 17 7 17 17" />
+                          </svg>
+                        )}
+                      </div>
+                      <p class="desc">{post.data.summary}</p>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           </section>
         )
