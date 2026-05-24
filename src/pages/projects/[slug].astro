@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { fetchOg } from '../../lib/og';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -23,6 +24,10 @@ const others = all.filter((p) => p.slug !== project.slug).slice(0, 3);
 
 const imgSrc = (img: string) =>
   /^https?:\/\//.test(img) ? img : `${base}${img.replace(/^\//, '')}`;
+
+const references = await Promise.all(
+  (project.data.links ?? []).map((url) => fetchOg(url)),
+);
 ---
 
 <Layout
@@ -70,6 +75,47 @@ const imgSrc = (img: string) =>
               </svg>
             </a>
           </p>
+        )
+      }
+
+      {
+        references.length > 0 && (
+          <section class="references reveal">
+            <div class="section-head">
+              <h2>references</h2>
+            </div>
+            <div class="cards">
+              {references.map((ref) => (
+                <a
+                  class={`card ${ref.image ? 'has-image' : ''}`}
+                  href={ref.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {ref.image && (
+                    <div class="card-media">
+                      <img
+                        src={ref.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )}
+                  <div class="card-body">
+                    <p class="kicker">{ref.hostname}</p>
+                    <div class="head">
+                      <h3 class="name">{ref.title ?? ref.url}</h3>
+                      <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
         )
       }
 

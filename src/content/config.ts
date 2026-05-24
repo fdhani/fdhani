@@ -12,6 +12,7 @@ const projects = defineCollection({
     color: z.enum(['yellow', 'pink', 'blue', 'green', 'orange']),
     order: z.number().int().nonnegative(),
     link: z.string().url().optional(),
+    links: z.array(z.string().url()).optional(),
     image: z.string().optional(),
   }),
 });
