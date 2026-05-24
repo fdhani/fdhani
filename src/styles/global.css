@@ -267,7 +267,7 @@ main.page {
 }
 
 /* role that cycles through job titles on the home hero. Cursive text with
-   a teal highlight block and white text. Three roles share the same
+   a teal highlight block and white text. Four roles share the same
    inline-grid cell so the parent sizes to the longest. Each role plays
    the clip-path keyframe with a delay derived from --i so they rotate
    in sequence with a blank gap between. */
@@ -289,15 +289,15 @@ main.page {
   border-radius: 8px;
   clip-path: inset(0 100% 0 0);
   -webkit-clip-path: inset(0 100% 0 0);
-  animation: role-cycle 13.5s cubic-bezier(0.65, 0, 0.35, 1) infinite both;
+  animation: role-cycle 18s cubic-bezier(0.65, 0, 0.35, 1) infinite both;
   animation-delay: calc(var(--i, 0) * 4.5s);
 }
 
 @keyframes role-cycle {
   0%   { clip-path: inset(0 100% 0 0);  -webkit-clip-path: inset(0 100% 0 0); }
-  4%   { clip-path: inset(0 0    0 0);  -webkit-clip-path: inset(0 0    0 0); }
-  22%  { clip-path: inset(0 0    0 0);  -webkit-clip-path: inset(0 0    0 0); }
-  26%  { clip-path: inset(0 0 0 100%);  -webkit-clip-path: inset(0 0 0 100%); }
+  3%   { clip-path: inset(0 0    0 0);  -webkit-clip-path: inset(0 0    0 0); }
+  17%  { clip-path: inset(0 0    0 0);  -webkit-clip-path: inset(0 0    0 0); }
+  20%  { clip-path: inset(0 0 0 100%);  -webkit-clip-path: inset(0 0 0 100%); }
   100% { clip-path: inset(0 0 0 100%);  -webkit-clip-path: inset(0 0 0 100%); }
 }
 .hero .lead {
