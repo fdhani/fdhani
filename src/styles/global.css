@@ -438,7 +438,7 @@ main.page {
   transform: translateX(-110%);
   pointer-events: none;
   z-index: 1;
-  animation: cta-sheen-load 1s ease 1.4s forwards;
+  animation: cta-sheen-loop 1.5s ease 1.4s infinite;
 }
 .cta-primary:hover::before {
   animation: cta-sheen 0.85s ease forwards;
@@ -447,9 +447,10 @@ main.page {
   from { transform: translateX(-110%); }
   to   { transform: translateX(110%); }
 }
-@keyframes cta-sheen-load {
-  from { transform: translateX(-110%); }
-  to   { transform: translateX(110%); }
+@keyframes cta-sheen-loop {
+  0%   { transform: translateX(-110%); }
+  55%  { transform: translateX(110%); }
+  100% { transform: translateX(110%); }
 }
 
 /* soft pulsing glow underneath, drawing the eye */
