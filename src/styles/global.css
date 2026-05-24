@@ -266,16 +266,6 @@ main.page {
   color: var(--accent);
 }
 
-/* cursive for the name */
-.hero h1 .cursive-name {
-  font-family: 'Dancing Script', cursive;
-  font-weight: 700;
-  font-size: 1.2em;
-  line-height: 0.95;
-  display: inline-block;
-  transform: translateY(2px);
-}
-
 /* role that cycles through job titles on the home hero. Cursive text with
    a teal highlight block and white text. Three roles share the same
    inline-grid cell so the parent sizes to the longest. Each role plays
@@ -284,8 +274,8 @@ main.page {
 .role-rotator {
   display: inline-grid;
   vertical-align: bottom;
-  font-family: 'Dancing Script', cursive;
-  font-weight: 700;
+  font-family: 'Story Script', cursive;
+  font-weight: 400;
   font-size: 1.15em;
   line-height: 1.15;
 }
