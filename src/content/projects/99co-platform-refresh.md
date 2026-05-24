@@ -7,6 +7,8 @@ role: Staff Software Engineer
 stack: [Next.js, App Router, React, TypeScript, Tech leadership]
 color: pink
 order: 2
+links:
+  - https://www.99.co/
 ---
 
 Led a frontend team building a stable platform for agents and consumers exploring properties in **Singapore**. The headline initiatives were a migration from the legacy Pages router to **App Router**, and a coordinated removal of legacy **Redux** usage across the codebase.
