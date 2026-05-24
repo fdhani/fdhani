@@ -7,6 +7,8 @@ role: Lead / Senior Software Engineer
 stack: [React, TypeScript, Observability, Web Performance]
 color: blue
 order: 3
+links:
+  - https://seller.tokopedia.com
 ---
 
 Helped maintain and improve the overall architecture of the Tokopedia **Seller Dashboard** (seller.tokopedia.com). Led a team of 8 engineers and drove the front-end observability working group, standardizing how hundreds of alerts and dashboards were authored across squads.

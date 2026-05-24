@@ -1032,7 +1032,8 @@ main.page {
   background: var(--accent-soft);
 }
 
-.related {
+.related,
+.references {
   margin-top: 56px;
   padding-top: 28px;
   border-top: 1px solid var(--border);
