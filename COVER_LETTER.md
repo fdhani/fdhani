@@ -5,7 +5,7 @@ West Java, Indonesia · +62 812-2713-9678 · fachran.dhani@gmail.com
 
 ---
 
-[Date]
+May 30, 2026
 
 Hiring Manager
 Talabat
